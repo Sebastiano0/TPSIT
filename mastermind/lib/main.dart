@@ -60,37 +60,55 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: Icon(
+              Icons.circle,
+              color: Colors.red,
+            ),
+            label: 'Red',
             backgroundColor: Colors.red,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
+            icon: Icon(
+              Icons.circle,
+              color: Colors.green,
+            ),
+            label: 'Green',
             backgroundColor: Colors.green,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
+            icon: Icon(
+              Icons.circle,
+              color: Colors.purple,
+            ),
+            label: 'Purple',
             backgroundColor: Colors.purple,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-            backgroundColor: Colors.pink,
+            icon: Icon(
+              Icons.circle,
+              color: Colors.white,
+            ),
+            label: 'White',
+            backgroundColor: Colors.white,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-            backgroundColor: Colors.red,
+            icon: Icon(
+              Icons.circle,
+              color: Colors.black,
+            ),
+            label: 'Black',
+            backgroundColor: Colors.black,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-            backgroundColor: Colors.red,
+            icon: Icon(
+              Icons.circle,
+              color: Colors.blue,
+            ),
+            label: 'Blue',
+            backgroundColor: Colors.blue,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.edit_note_rounded),
             label: 'Home',
             backgroundColor: Colors.red,
           ),
