@@ -60,7 +60,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(
+            icon: const Icon(
               Icons.circle,
               color: Colors.red,
             ),
@@ -68,7 +68,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             backgroundColor: Colors.red.shade300,
           ),
           BottomNavigationBarItem(
-            icon: Icon(
+            icon: const Icon(
               Icons.circle,
               color: Colors.green,
             ),
@@ -76,14 +76,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             backgroundColor: Colors.green.shade300,
           ),
           BottomNavigationBarItem(
-            icon: Icon(
+            icon: const Icon(
               Icons.circle,
               color: Colors.purple,
             ),
             label: 'Purple',
             backgroundColor: Colors.purple.shade300,
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(
               Icons.circle,
               color: Colors.white,
@@ -91,7 +91,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             label: 'White',
             backgroundColor: Colors.white12,
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(
               Icons.circle,
               color: Colors.black,
@@ -100,7 +100,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             backgroundColor: Colors.black26,
           ),
           BottomNavigationBarItem(
-            icon: Icon(
+            icon: const Icon(
               Icons.circle,
               color: Colors.blue,
             ),
