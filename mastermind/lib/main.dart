@@ -58,14 +58,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       ),
       body: _listViewBody(),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
               Icons.circle,
               color: Colors.red,
             ),
             label: 'Red',
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.red.shade300,
           ),
           BottomNavigationBarItem(
             icon: Icon(
@@ -73,7 +73,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               color: Colors.green,
             ),
             label: 'Green',
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.green.shade300,
           ),
           BottomNavigationBarItem(
             icon: Icon(
@@ -81,7 +81,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               color: Colors.purple,
             ),
             label: 'Purple',
-            backgroundColor: Colors.purple,
+            backgroundColor: Colors.purple.shade300,
           ),
           BottomNavigationBarItem(
             icon: Icon(
@@ -89,7 +89,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               color: Colors.white,
             ),
             label: 'White',
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.white12,
           ),
           BottomNavigationBarItem(
             icon: Icon(
@@ -97,7 +97,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               color: Colors.black,
             ),
             label: 'Black',
-            backgroundColor: Colors.black,
+            backgroundColor: Colors.black26,
           ),
           BottomNavigationBarItem(
             icon: Icon(
@@ -105,12 +105,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               color: Colors.blue,
             ),
             label: 'Blue',
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.blue.shade300,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.edit_note_rounded),
+            icon: Icon(Icons.check),
             label: 'Home',
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.brown.shade300,
           ),
         ],
         currentIndex: _selectedIndex,
