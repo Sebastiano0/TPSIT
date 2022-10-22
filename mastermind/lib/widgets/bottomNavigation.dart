@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'gameColors.dart';
 
 class BottomNavigation extends StatefulWidget {
-  const BottomNavigation({super.key});
+  var color;
+
+  BottomNavigation(this.color, {super.key});
 
   @override
-  _BottomNavigationState createState() => _BottomNavigationState();
+  _BottomNavigationState createState() => _BottomNavigationState(color);
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
   int _selectedIndex = 0;
+  GameColors color;
+  _BottomNavigationState(this.color);
 
   @override
   void initState() {
@@ -26,57 +31,52 @@ class _BottomNavigationState extends State<BottomNavigation> {
     return BottomNavigationBar(
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: const Icon(
+          icon: Icon(
             Icons.circle,
-            color: Colors.red,
+            color: color.getColor(0),
           ),
-          label: 'Red',
+          label: '',
           backgroundColor: Colors.red.shade300,
         ),
         BottomNavigationBarItem(
-          icon: const Icon(
+          icon: Icon(
             Icons.circle,
-            color: Colors.green,
+            color: color.getColor(1),
           ),
-          label: 'Green',
+          label: '',
           backgroundColor: Colors.green.shade300,
         ),
         BottomNavigationBarItem(
-          icon: const Icon(
+          icon: Icon(
             Icons.circle,
-            color: Colors.purple,
+            color: color.getColor(2),
           ),
-          label: 'Purple',
+          label: '',
           backgroundColor: Colors.purple.shade300,
         ),
-        const BottomNavigationBarItem(
+        BottomNavigationBarItem(
           icon: Icon(
             Icons.circle,
-            color: Colors.white,
+            color: color.getColor(3),
           ),
-          label: 'White',
+          label: '',
           backgroundColor: Colors.white12,
         ),
-        const BottomNavigationBarItem(
+        BottomNavigationBarItem(
           icon: Icon(
             Icons.circle,
-            color: Colors.black,
+            color: color.getColor(4),
           ),
-          label: 'Black',
+          label: '',
           backgroundColor: Colors.black26,
         ),
         BottomNavigationBarItem(
-          icon: const Icon(
+          icon: Icon(
             Icons.circle,
-            color: Colors.blue,
+            color: color.getColor(5),
           ),
-          label: 'Blue',
+          label: '',
           backgroundColor: Colors.blue.shade300,
-        ),
-        BottomNavigationBarItem(
-          icon: const Icon(Icons.check),
-          label: 'Home',
-          backgroundColor: Colors.brown.shade300,
         ),
       ],
       currentIndex: _selectedIndex,
@@ -86,9 +86,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
   }
 
   void _onItemTapped(int index) {
+    color.setColor(index);
     setState(() {
-      print(_selectedIndex);
       _selectedIndex = index;
+      print(_selectedIndex);
     });
   }
 }

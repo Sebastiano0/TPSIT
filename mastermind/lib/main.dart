@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'widgets/board.dart';
 import 'widgets/bottomNavigation.dart';
+import 'widgets/gameColors.dart';
 
 void main() => runApp(const MyApp());
 
@@ -26,9 +27,7 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  int _selectedIndex = 0;
-  final ScrollController _homeController = ScrollController();
-
+  GameColors colors = GameColors();
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +35,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       appBar: AppBar(
         title: const Text('Mastermind'),
       ),
-      body: Board(),
-      bottomNavigationBar: BottomNavigation(),
+      body: Board(colors),
+      bottomNavigationBar: BottomNavigation(colors),
     );
   }
 }

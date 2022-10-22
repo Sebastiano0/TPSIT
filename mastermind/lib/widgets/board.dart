@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
-
+import 'gameColors.dart';
 import 'package:flutter/cupertino.dart';
 
 class Board extends StatefulWidget {
-  const Board({super.key});
+  var color;
+
+  Board(this.color, {super.key});
 
   @override
-  _BoardState createState() => _BoardState();
+  _BoardState createState() => _BoardState(color);
 }
 
 class _BoardState extends State<Board> {
-  
+  GameColors color;
+  _BoardState(this.color);
+
   bool? checkboxValue10;
   bool? checkboxValue9;
   bool? checkboxValue11;
@@ -52,6 +56,7 @@ class _BoardState extends State<Board> {
   bool? checkboxValue39;
   bool? checkboxValue40;
   int checkboxIndex = 0;
+
   @override
   void initState() {
     super.initState();
@@ -106,8 +111,8 @@ class _BoardState extends State<Board> {
                     onChanged: (newValue) async {
                       setState(() => checkboxValue1 = newValue!);
                     },
-                    activeColor: Colors.white,
-                    checkColor: Colors.white,
+                    activeColor: color.getColor(),
+                    checkColor: color.getColor(),
                   ),
                 ),
                 Theme(
@@ -122,8 +127,8 @@ class _BoardState extends State<Board> {
                     onChanged: (newValue) async {
                       setState(() => checkboxValue2 = newValue!);
                     },
-                    activeColor: Colors.white,
-                    checkColor: Colors.white,
+                    activeColor: color.getColor(),
+                    checkColor: color.getColor(),
                   ),
                 ),
                 Theme(
@@ -138,8 +143,8 @@ class _BoardState extends State<Board> {
                     onChanged: (newValue) async {
                       setState(() => checkboxValue3 = newValue!);
                     },
-                    activeColor: Colors.white,
-                    checkColor: Colors.white,
+                    activeColor: color.getColor(),
+                    checkColor: color.getColor(),
                   ),
                 ),
                 Theme(
@@ -154,8 +159,8 @@ class _BoardState extends State<Board> {
                     onChanged: (newValue) async {
                       setState(() => checkboxValue4 = newValue!);
                     },
-                    activeColor: Colors.white,
-                    checkColor: Colors.white,
+                    activeColor: color.getColor(),
+                    checkColor: color.getColor(),
                   ),
                 ),
                 ElevatedButton.icon(
