@@ -56,32 +56,34 @@ class _BoardState extends State<Board> {
   bool? checkboxValue39;
   bool? checkboxValue40;
   int checkboxIndex = 0;
+  Color borderContainerColor = Colors.green;
+  bool enterVisibility = true;
+  bool resultVisibility = false;
 
   @override
   void initState() {
     super.initState();
-    //_appState = ScopedModel.of<AppState>(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        chance(),
-        chance(),
-        chance(),
-        chance(),
-        chance(),
-        chance(),
-        chance(),
-        chance(),
-        chance(),
-        chance(),
+        chance(context),
+        // chance(),
+        // chance(),
+        // chance(),
+        // chance(),
+        // chance(),
+        // chance(),
+        // chance(),
+        // chance(),
+        // chance(),
       ],
     );
   }
 
-  chance() {
+  chance(context) {
     return ListView(
         padding: EdgeInsets.zero,
         reverse: true,
@@ -89,91 +91,141 @@ class _BoardState extends State<Board> {
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
         children: <Widget>[
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 60.67,
-            decoration: const BoxDecoration(
-              color: Colors.black26,
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Theme(
-                  data: ThemeData(
-                    checkboxTheme: const CheckboxThemeData(
-                      shape: CircleBorder(),
+          AbsorbPointer(
+            absorbing: !enterVisibility,
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: 60.67,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: borderContainerColor),
+                color: Colors.transparent,
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Theme(
+                    data: ThemeData(
+                      checkboxTheme: const CheckboxThemeData(
+                        shape: CircleBorder(),
+                      ),
+                      unselectedWidgetColor: const Color(0xFFF5F5F5),
                     ),
-                    unselectedWidgetColor: const Color(0xFFF5F5F5),
-                  ),
-                  child: Checkbox(
-                    value: checkboxValue1 ??= false,
-                    onChanged: (newValue) async {
-                      setState(() => checkboxValue1 = newValue!);
-                    },
-                    activeColor: color.getColor(),
-                    checkColor: color.getColor(),
-                  ),
-                ),
-                Theme(
-                  data: ThemeData(
-                    checkboxTheme: const CheckboxThemeData(
-                      shape: CircleBorder(),
+                    child: Checkbox(
+                      value: checkboxValue1 ??= false,
+                      onChanged: (newValue) async {
+                        setState(() => checkboxValue1 = true);
+                        color.setColorSequence(0);
+                      },
+                      activeColor: color.getColorSequence(0),
+                      checkColor: color.getColorSequence(0),
                     ),
-                    unselectedWidgetColor: const Color(0xFFF5F5F5),
                   ),
-                  child: Checkbox(
-                    value: checkboxValue2 ??= false,
-                    onChanged: (newValue) async {
-                      setState(() => checkboxValue2 = newValue!);
-                    },
-                    activeColor: color.getColor(),
-                    checkColor: color.getColor(),
-                  ),
-                ),
-                Theme(
-                  data: ThemeData(
-                    checkboxTheme: const CheckboxThemeData(
-                      shape: CircleBorder(),
+                  Theme(
+                    data: ThemeData(
+                      checkboxTheme: const CheckboxThemeData(
+                        shape: CircleBorder(),
+                      ),
+                      unselectedWidgetColor: const Color(0xFFF5F5F5),
                     ),
-                    unselectedWidgetColor: const Color(0xFFF5F5F5),
-                  ),
-                  child: Checkbox(
-                    value: checkboxValue3 ??= false,
-                    onChanged: (newValue) async {
-                      setState(() => checkboxValue3 = newValue!);
-                    },
-                    activeColor: color.getColor(),
-                    checkColor: color.getColor(),
-                  ),
-                ),
-                Theme(
-                  data: ThemeData(
-                    checkboxTheme: const CheckboxThemeData(
-                      shape: CircleBorder(),
+                    child: Checkbox(
+                      value: checkboxValue2 ??= false,
+                      onChanged: (newValue) async {
+                        setState(() => checkboxValue2 = true);
+                        color.setColorSequence(1);
+                      },
+                      activeColor: color.getColorSequence(1),
+                      checkColor: color.getColorSequence(1),
                     ),
-                    unselectedWidgetColor: const Color(0xFFF5F5F5),
                   ),
-                  child: Checkbox(
-                    value: checkboxValue4 ??= false,
-                    onChanged: (newValue) async {
-                      setState(() => checkboxValue4 = newValue!);
-                    },
-                    activeColor: color.getColor(),
-                    checkColor: color.getColor(),
+                  Theme(
+                    data: ThemeData(
+                      checkboxTheme: const CheckboxThemeData(
+                        shape: CircleBorder(),
+                      ),
+                      unselectedWidgetColor: const Color(0xFFF5F5F5),
+                    ),
+                    child: Checkbox(
+                      value: checkboxValue3 ??= false,
+                      onChanged: (newValue) async {
+                        setState(() => checkboxValue3 = true);
+                        color.setColorSequence(2);
+                      },
+                      activeColor: color.getColorSequence(2),
+                      checkColor: color.getColorSequence(2),
+                    ),
                   ),
-                ),
-                ElevatedButton.icon(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0x101213)),
-                  icon: const Icon(
-                    Icons.check_circle,
-                    size: 15,
+                  Theme(
+                    data: ThemeData(
+                      checkboxTheme: const CheckboxThemeData(
+                        shape: CircleBorder(),
+                      ),
+                      unselectedWidgetColor: const Color(0xFFF5F5F5),
+                    ),
+                    child: Checkbox(
+                      value: checkboxValue4 ??= false,
+                      onChanged: (newValue) async {
+                        setState(() => checkboxValue4 = true);
+                        color.setColorSequence(3);
+                      },
+                      activeColor: color.getColorSequence(3),
+                      checkColor: color.getColorSequence(3),
+                    ),
                   ),
-                  label: const Text("Enter"),
-                ),
-              ],
+                  Visibility(
+                      visible: enterVisibility,
+                      child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: Colors.white)),
+                          child: ElevatedButton.icon(
+                            onPressed: () {
+                              int? response = color.checkSequence(context);
+                              if (response != -1) {
+                                setState(() {});
+                                enterVisibility = false;
+                                resultVisibility = true;
+                                borderContainerColor = Colors.transparent;
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0x00101213)),
+                            icon: const Icon(
+                              Icons.check_circle,
+                              size: 15,
+                            ),
+                            label: const Text("Enter"),
+                          ))),
+                  Visibility(
+                      visible: resultVisibility,
+                      child: SizedBox(
+                          width: 100,
+                          height: 100,
+                          child: GridView(
+                            padding: EdgeInsets.zero,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 15,
+                              mainAxisSpacing: 10,
+                              childAspectRatio: 2,
+                            ),
+                            shrinkWrap: false,
+                            scrollDirection: Axis.vertical,
+                            children: [
+                              Icon(Icons.circle,
+                                  color: color.guessedSequence[0], size: 24),
+                              Icon(Icons.circle,
+                                  color: color.guessedSequence[1], size: 24),
+                              Icon(Icons.circle,
+                                  color: color.guessedSequence[2], size: 24),
+                              Icon(Icons.circle,
+                                  color: color.guessedSequence[3], size: 24),
+                            ],
+                          ))),
+                ],
+              ),
             ),
           ),
         ]);

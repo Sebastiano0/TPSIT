@@ -44,7 +44,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
             color: color.getColor(1),
           ),
           label: '',
-          backgroundColor: Colors.green.shade300,
+          backgroundColor: Colors.yellow.shade300,
         ),
         BottomNavigationBarItem(
           icon: Icon(
@@ -52,7 +52,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
             color: color.getColor(2),
           ),
           label: '',
-          backgroundColor: Colors.purple.shade300,
+          backgroundColor: Colors.green.shade300,
         ),
         BottomNavigationBarItem(
           icon: Icon(
@@ -60,7 +60,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
             color: color.getColor(3),
           ),
           label: '',
-          backgroundColor: Colors.white12,
+          backgroundColor: Colors.blue.shade300,
         ),
         BottomNavigationBarItem(
           icon: Icon(
@@ -68,7 +68,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
             color: color.getColor(4),
           ),
           label: '',
-          backgroundColor: Colors.black26,
+          backgroundColor: Colors.purple.shade300,
         ),
         BottomNavigationBarItem(
           icon: Icon(
@@ -76,11 +76,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
             color: color.getColor(5),
           ),
           label: '',
-          backgroundColor: Colors.blue.shade300,
+          backgroundColor: Colors.black,
         ),
       ],
       currentIndex: _selectedIndex,
-      selectedItemColor: Colors.amber[800],
       onTap: _onItemTapped,
     );
   }

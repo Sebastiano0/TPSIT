@@ -31,9 +31,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
+    colors.createColorSequence();
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
         title: const Text('Mastermind'),
+        backgroundColor: Colors.black,
       ),
       body: Board(colors),
       bottomNavigationBar: BottomNavigation(colors),
