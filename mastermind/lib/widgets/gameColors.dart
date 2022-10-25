@@ -55,26 +55,26 @@ class GameColors {
     guessedSequence.clear();
     correctPlace = 0;
     wrongPlace = 0;
-    List<Color> tempListColor = [];
+    List<Color> tempListColor = List.from(colorSequence);
     for (int i = 0; i < 4; i++) {
-      tempListColor.add(colorSequence[i]);
+      // tempListColor.add(colorSequence[i]);
       if (colorSequenceToGuess.contains(tempListColor[i])) {
         Color actualColor = tempListColor[i];
         if (colorSequenceToGuess[i] == actualColor) {
           correctPlace++;
-          guessedSequence.add(Colors.red);
+          guessedSequence.add(Colors.green);
         } else {
           tempListColor[i] = Colors.transparent;
-          if (!colorSequence.contains(actualColor)) {
+          if (!tempListColor.contains(actualColor)) {
             wrongPlace++;
           }
         }
       }
     }
+    for (int i = 0; i < wrongPlace; i++) {
+      guessedSequence.add(Colors.white);
+    }
     while (guessedSequence.length < 4) {
-      for (int i = 0; i < wrongPlace; i++) {
-        guessedSequence.add(Colors.white);
-      }
       guessedSequence.add(Colors.blueGrey);
     }
     if (correctPlace == 4) {
