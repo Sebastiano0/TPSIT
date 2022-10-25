@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../main.dart';
+import 'package:mastermind/widgets/gameColors.dart';
 
 class Message {
   completeCombination(context) {
@@ -49,22 +48,22 @@ class Message {
     );
   }
 
-  win(context, List<Color> guessedSequence) {
+  endGame(context, List<Color> guessedSequence, Color messageColor, message) {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          shape: const RoundedRectangleBorder(
-              side: BorderSide(color: Colors.green),
-              borderRadius: BorderRadius.all(Radius.circular(32.0))),
+          shape: RoundedRectangleBorder(
+              side: BorderSide(color: messageColor),
+              borderRadius: const BorderRadius.all(Radius.circular(32.0))),
           contentPadding: const EdgeInsets.only(top: 10.0),
           backgroundColor: Colors.black,
-          title: const Text(
-            ('Hai vinto!'),
+          title: Text(
+            (message),
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.green,
+              color: messageColor,
             ),
           ),
           content: SingleChildScrollView(
@@ -85,9 +84,9 @@ class Message {
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Nuova partita'),
+              child: const Text('Chiudi'),
               onPressed: () {
-                main();
+                GameColors().reset();
                 Navigator.of(context).pop();
               },
             ),

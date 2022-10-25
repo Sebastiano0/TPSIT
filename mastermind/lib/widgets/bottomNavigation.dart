@@ -24,10 +24,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    return chooserow();
-  }
-
-  chooserow() {
     return BottomNavigationBar(
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
@@ -88,7 +84,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
     color.setColor(index);
     setState(() {
       _selectedIndex = index;
-      print(_selectedIndex);
     });
   }
 }

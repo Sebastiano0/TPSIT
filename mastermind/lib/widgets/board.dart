@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'gameColors.dart';
-import 'package:flutter/cupertino.dart';
 
 class Board extends StatefulWidget {
   var color;
@@ -15,51 +14,6 @@ class _BoardState extends State<Board> {
   GameColors color;
   _BoardState(this.color);
 
-  bool? checkboxValue10;
-  bool? checkboxValue9;
-  bool? checkboxValue11;
-  bool? checkboxValue12;
-  bool? checkboxValue1;
-  bool? checkboxValue2;
-  bool? checkboxValue3;
-  bool? checkboxValue4;
-  bool? checkboxValue5;
-  bool? checkboxValue6;
-  bool? checkboxValue7;
-  bool? checkboxValue8;
-  bool? checkboxValue13;
-  bool? checkboxValue14;
-  bool? checkboxValue15;
-  bool? checkboxValue16;
-  bool? checkboxValue17;
-  bool? checkboxValue18;
-  bool? checkboxValue19;
-  bool? checkboxValue20;
-  bool? checkboxValue21;
-  bool? checkboxValue22;
-  bool? checkboxValue23;
-  bool? checkboxValue24;
-  bool? checkboxValue25;
-  bool? checkboxValue26;
-  bool? checkboxValue27;
-  bool? checkboxValue28;
-  bool? checkboxValue29;
-  bool? checkboxValue30;
-  bool? checkboxValue31;
-  bool? checkboxValue32;
-  bool? checkboxValue33;
-  bool? checkboxValue34;
-  bool? checkboxValue35;
-  bool? checkboxValue36;
-  bool? checkboxValue37;
-  bool? checkboxValue38;
-  bool? checkboxValue39;
-  bool? checkboxValue40;
-  int checkboxIndex = 0;
-  Color borderContainerColor = Colors.green;
-  bool enterVisibility = true;
-  bool resultVisibility = false;
-
   @override
   void initState() {
     super.initState();
@@ -69,165 +23,169 @@ class _BoardState extends State<Board> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        chance(context),
-        // chance(),
-        // chance(),
-        // chance(),
-        // chance(),
-        // chance(),
-        // chance(),
-        // chance(),
-        // chance(),
-        // chance(),
+        generateRow(context, color.logic.checkboxValues),
       ],
     );
   }
 
-  chance(context) {
+  void updateState() {
+    setState(() {});
+  }
+
+  generateRow(context, checkboxValues) {
+    List<Widget> row =
+        List.generate(10, (index) => singleRow(index, checkboxValues, context));
+
     return ListView(
         padding: EdgeInsets.zero,
         reverse: true,
         primary: false,
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
-        children: <Widget>[
-          AbsorbPointer(
-            absorbing: !enterVisibility,
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: 60.67,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: borderContainerColor),
-                color: Colors.transparent,
+        children: row);
+  }
+
+  singleRow(int i, checkboxValues, context) {
+    return AbsorbPointer(
+      absorbing: !color.logic.enterVisibility[i],
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: 60.67,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: color.logic.borderContainerColor[i]),
+          color: Colors.transparent,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Theme(
+              data: ThemeData(
+                checkboxTheme: const CheckboxThemeData(
+                  shape: CircleBorder(),
+                ),
+                unselectedWidgetColor: const Color(0xFFF5F5F5),
               ),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Theme(
-                    data: ThemeData(
-                      checkboxTheme: const CheckboxThemeData(
-                        shape: CircleBorder(),
-                      ),
-                      unselectedWidgetColor: const Color(0xFFF5F5F5),
-                    ),
-                    child: Checkbox(
-                      value: checkboxValue1 ??= false,
-                      onChanged: (newValue) async {
-                        setState(() => checkboxValue1 = true);
-                        color.setColorSequence(0);
-                      },
-                      activeColor: color.getColorSequence(0),
-                      checkColor: color.getColorSequence(0),
-                    ),
-                  ),
-                  Theme(
-                    data: ThemeData(
-                      checkboxTheme: const CheckboxThemeData(
-                        shape: CircleBorder(),
-                      ),
-                      unselectedWidgetColor: const Color(0xFFF5F5F5),
-                    ),
-                    child: Checkbox(
-                      value: checkboxValue2 ??= false,
-                      onChanged: (newValue) async {
-                        setState(() => checkboxValue2 = true);
-                        color.setColorSequence(1);
-                      },
-                      activeColor: color.getColorSequence(1),
-                      checkColor: color.getColorSequence(1),
-                    ),
-                  ),
-                  Theme(
-                    data: ThemeData(
-                      checkboxTheme: const CheckboxThemeData(
-                        shape: CircleBorder(),
-                      ),
-                      unselectedWidgetColor: const Color(0xFFF5F5F5),
-                    ),
-                    child: Checkbox(
-                      value: checkboxValue3 ??= false,
-                      onChanged: (newValue) async {
-                        setState(() => checkboxValue3 = true);
-                        color.setColorSequence(2);
-                      },
-                      activeColor: color.getColorSequence(2),
-                      checkColor: color.getColorSequence(2),
-                    ),
-                  ),
-                  Theme(
-                    data: ThemeData(
-                      checkboxTheme: const CheckboxThemeData(
-                        shape: CircleBorder(),
-                      ),
-                      unselectedWidgetColor: const Color(0xFFF5F5F5),
-                    ),
-                    child: Checkbox(
-                      value: checkboxValue4 ??= false,
-                      onChanged: (newValue) async {
-                        setState(() => checkboxValue4 = true);
-                        color.setColorSequence(3);
-                      },
-                      activeColor: color.getColorSequence(3),
-                      checkColor: color.getColorSequence(3),
-                    ),
-                  ),
-                  Visibility(
-                      visible: enterVisibility,
-                      child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: Colors.white)),
-                          child: ElevatedButton.icon(
-                            onPressed: () {
-                              int? response = color.checkSequence(context);
-                              if (response != -1) {
-                                setState(() {});
-                                enterVisibility = false;
-                                resultVisibility = true;
-                                borderContainerColor = Colors.transparent;
-                              }
-                            },
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0x00101213)),
-                            icon: const Icon(
-                              Icons.check_circle,
-                              size: 15,
-                            ),
-                            label: const Text("Enter"),
-                          ))),
-                  Visibility(
-                      visible: resultVisibility,
-                      child: SizedBox(
-                          width: 100,
-                          height: 100,
-                          child: GridView(
-                            padding: EdgeInsets.zero,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 15,
-                              mainAxisSpacing: 10,
-                              childAspectRatio: 2,
-                            ),
-                            shrinkWrap: false,
-                            scrollDirection: Axis.vertical,
-                            children: [
-                              Icon(Icons.circle,
-                                  color: color.guessedSequence[0], size: 24),
-                              Icon(Icons.circle,
-                                  color: color.guessedSequence[1], size: 24),
-                              Icon(Icons.circle,
-                                  color: color.guessedSequence[2], size: 24),
-                              Icon(Icons.circle,
-                                  color: color.guessedSequence[3], size: 24),
-                            ],
-                          ))),
-                ],
+              child: Checkbox(
+                value: checkboxValues[(i * 4)] ??= false,
+                onChanged: (newValue) async {
+                  setState(() => checkboxValues[(i * 4)] = true);
+                  color.setColorSequence(i, 0);
+                },
+                activeColor: color.getColorSequence(i, 0),
+                checkColor: color.getColorSequence(i, 0),
               ),
             ),
-          ),
-        ]);
+            Theme(
+              data: ThemeData(
+                checkboxTheme: const CheckboxThemeData(
+                  shape: CircleBorder(),
+                ),
+                unselectedWidgetColor: const Color(0xFFF5F5F5),
+              ),
+              child: Checkbox(
+                value: checkboxValues[(i * 4) + 1] ??= false,
+                onChanged: (newValue) async {
+                  setState(() => checkboxValues[(i * 4) + 1] = true);
+                  color.setColorSequence(i, 1);
+                },
+                activeColor: color.getColorSequence(i, 1),
+                checkColor: color.getColorSequence(i, 1),
+              ),
+            ),
+            Theme(
+              data: ThemeData(
+                checkboxTheme: const CheckboxThemeData(
+                  shape: CircleBorder(),
+                ),
+                unselectedWidgetColor: const Color(0xFFF5F5F5),
+              ),
+              child: Checkbox(
+                value: checkboxValues[(i * 4) + 2] ??= false,
+                onChanged: (newValue) async {
+                  setState(() => checkboxValues[(i * 4) + 2] = true);
+                  color.setColorSequence(i, 2);
+                },
+                activeColor: color.getColorSequence(i, 2),
+                checkColor: color.getColorSequence(i, 2),
+              ),
+            ),
+            Theme(
+              data: ThemeData(
+                checkboxTheme: const CheckboxThemeData(
+                  shape: CircleBorder(),
+                ),
+                unselectedWidgetColor: const Color(0xFFF5F5F5),
+              ),
+              child: Checkbox(
+                value: checkboxValues[(i * 4) + 3] ??= false,
+                onChanged: (newValue) async {
+                  setState(() => checkboxValues[(i * 4) + 3] = true);
+                  color.setColorSequence(i, 3);
+                },
+                activeColor: color.getColorSequence(i, 3),
+                checkColor: color.getColorSequence(i, 3),
+              ),
+            ),
+            Visibility(
+                visible: color.logic.enterVisibility[i],
+                child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.white)),
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        int? response = color.checkSequence(context);
+                        if (response != -1) {
+                          setState(() {});
+                          color.logic.enterVisibility[i] = false;
+                          color.logic.resultVisibility[i] = true;
+                          color.logic.enterVisibility[i + 1] = true;
+                          color.logic.borderContainerColor[i] =
+                              Colors.transparent;
+                          color.logic.borderContainerColor[i + 1] =
+                              Colors.green;
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0x00101213)),
+                      icon: const Icon(
+                        Icons.check_circle,
+                        size: 15,
+                      ),
+                      label: const Text("Enter"),
+                    ))),
+            Visibility(
+                visible: color.logic.resultVisibility[i],
+                child: SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: GridView(
+                      padding: EdgeInsets.zero,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 15,
+                        mainAxisSpacing: 10,
+                        childAspectRatio: 2,
+                      ),
+                      shrinkWrap: false,
+                      scrollDirection: Axis.vertical,
+                      children: [
+                        Icon(Icons.circle,
+                            color: color.guessedSequence[i][0], size: 24),
+                        Icon(Icons.circle,
+                            color: color.guessedSequence[i][1], size: 24),
+                        Icon(Icons.circle,
+                            color: color.guessedSequence[i][2], size: 24),
+                        Icon(Icons.circle,
+                            color: color.guessedSequence[i][3], size: 24),
+                      ],
+                    )))
+          ],
+        ),
+      ),
+    );
   }
 }

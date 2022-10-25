@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mastermind/widgets/appBarButton.dart';
 import 'widgets/board.dart';
 import 'widgets/bottomNavigation.dart';
 import 'widgets/gameColors.dart';
@@ -35,9 +36,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text('Mastermind'),
-        backgroundColor: Colors.black,
-      ),
+          title: const Text('Mastermind'),
+          backgroundColor: Colors.black,
+          actions: [AppBarButton(colors)]),
       body: Board(colors),
       bottomNavigationBar: BottomNavigation(colors),
     );
