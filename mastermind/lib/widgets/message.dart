@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mastermind/widgets/gameColors.dart';
+import 'package:mastermind/widgets/settings.dart';
 
 class Message {
   completeCombination(context) {
@@ -48,7 +49,8 @@ class Message {
     );
   }
 
-  endGame(context, List<Color> guessedSequence, Color messageColor, message) {
+  endGame(context, List<Color> guessedSequence, Color messageColor, message,
+      color) {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -86,7 +88,100 @@ class Message {
             TextButton(
               child: const Text('Chiudi'),
               onPressed: () {
-                GameColors().reset();
+                color.reset();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  settings(context, color, reset) {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: const RoundedRectangleBorder(
+              side: BorderSide(color: Colors.white),
+              borderRadius: BorderRadius.all(Radius.circular(32.0))),
+          contentPadding: const EdgeInsets.only(top: 10.0),
+          backgroundColor: Colors.black,
+          title: const Text(
+            ("Impostazioni"),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children:<Widget>[Settings(color, reset),]
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                'Chiudi',
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  info(context) {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: const RoundedRectangleBorder(
+              side: BorderSide(color: Colors.white),
+              borderRadius: BorderRadius.all(Radius.circular(32.0))),
+          contentPadding: const EdgeInsets.only(top: 10.0),
+          backgroundColor: Colors.black,
+          title: const Text(
+            ("Regole"),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                SizedBox(
+                    height: 200,
+                    child: SingleChildScrollView(
+                      child: Text(
+                        ('''L’ utente fa il suo primo tentativo, cercando di indovinare il codice. In risposta visualizzerà degli aiuti che comunicano:\n
+\u2022Il numero di cifre giuste al posto giusto, cioè le cifre del tentativo che sono effettivamente presenti nel codice al posto tentato, con pioli verdi.\n
+\u2022Il numero di cifre giuste al posto sbagliato, cioè le cifre del tentativo che sono effettivamente presenti nel codice, ma non al posto tentato, con pioli bianchi.\n\n
+Non saranno comunicate quali cifre sono giuste o sbagliate ma solo quante. Se si riesce ad indovinare il codice entro il numero di tentativi predeterminati (10) allora quest'ultimo vince la partita.
+
+'''),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ))
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                'Chiudi',
+              ),
+              onPressed: () {
                 Navigator.of(context).pop();
               },
             ),

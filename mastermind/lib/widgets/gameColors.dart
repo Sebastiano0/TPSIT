@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mastermind/widgets/board.dart';
 import 'dart:math';
 import 'package:mastermind/widgets/message.dart';
 import 'logic.dart';
@@ -7,6 +8,9 @@ class GameColors {
   GameColors();
 
   Logic logic = Logic();
+
+  bool multipleColorAllow = false;
+  int rows = 10;
 
   int _selectedIndex = 0;
   final List<Color> colors = <Color>[
@@ -27,159 +31,35 @@ class GameColors {
     colorSequenceToGuess.clear();
     for (int i = 0; i < 4;) {
       temp = colors[Random().nextInt(6)];
-      if (!colorSequenceToGuess.contains(temp)) {
+      print(multipleColorAllow);
+      if (!colorSequenceToGuess.contains(temp) || multipleColorAllow) {
         colorSequenceToGuess.add(temp);
         i++;
       }
     }
     print(colorSequenceToGuess.toString());
+    logic.createArrays(rows);
   }
-
-  List<List<Color>> colorSequence = [
-    [
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent
-    ],
-    [
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent
-    ],
-    [
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent
-    ],
-    [
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent
-    ],
-    [
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent
-    ],
-    [
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent
-    ],
-    [
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent
-    ],
-    [
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent
-    ],
-    [
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent
-    ],
-    [
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent
-    ]
-  ];
-
-  List<List<Color>> guessedSequence = [
-    [
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent
-    ],
-    [
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent
-    ],
-    [
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent
-    ],
-    [
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent
-    ],
-    [
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent
-    ],
-    [
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent
-    ],
-    [
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent
-    ],
-    [
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent
-    ],
-    [
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent
-    ],
-    [
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent,
-      Colors.transparent
-    ]
-  ];
 
   late int correctPlace;
   late int wrongPlace;
 
   checkSequence(context) {
-    if (colorSequence[chance].contains(Colors.transparent)) {
+    if (logic.colorSequence[chance].contains(Colors.transparent)) {
       Message().completeCombination(context);
       return -1;
     }
-    guessedSequence[chance].clear();
+    logic.guessedSequence[chance].clear();
     correctPlace = 0;
     wrongPlace = 0;
-    List<Color> tempListColor = List.from(colorSequence[chance]);
+    List<Color> tempListColor = List.from(logic.colorSequence[chance]);
     for (int i = 0; i < 4; i++) {
       // tempListColor.add(colorSequence[i]);
       if (colorSequenceToGuess.contains(tempListColor[i])) {
         Color actualColor = tempListColor[i];
         if (colorSequenceToGuess[i] == actualColor) {
           correctPlace++;
-          guessedSequence[chance].add(Colors.green);
+          logic.guessedSequence[chance].add(Colors.green);
         } else {
           tempListColor[i] = Colors.transparent;
           if (!tempListColor.contains(actualColor)) {
@@ -189,30 +69,31 @@ class GameColors {
       }
     }
     for (int i = 0; i < wrongPlace; i++) {
-      guessedSequence[chance].add(Colors.white);
+      logic.guessedSequence[chance].add(Colors.white);
     }
-    while (guessedSequence[chance].length < 4) {
-      guessedSequence[chance].add(Colors.blueGrey);
+    while (logic.guessedSequence[chance].length < 4) {
+      logic.guessedSequence[chance].add(Colors.blueGrey);
     }
     if (correctPlace == 4) {
-      Message()
-          .endGame(context, colorSequenceToGuess, Colors.green, "Hai vinto");
-      return;
+      Message().endGame(
+          context, colorSequenceToGuess, Colors.green, "Hai vinto", this);
+      return 1;
     }
     chance++;
     if (chance == 10) {
-      Message().endGame(context, colorSequenceToGuess, Colors.red, "Hai perso");
+      Message().endGame(
+          context, colorSequenceToGuess, Colors.red, "Hai perso", this);
       return;
     }
     return;
   }
 
   getColorSequence(int y, int x) {
-    return colorSequence[y][x];
+    return logic.colorSequence[y][x];
   }
 
   setColorSequence(int y, int x) {
-    colorSequence[y][x] = colors[_selectedIndex];
+    logic.colorSequence[y][x] = colors[_selectedIndex];
   }
 
   Color getColor([int? i]) {
@@ -230,10 +111,10 @@ class GameColors {
     //colorSequence-guessedSequence
     createColorSequence();
     chance = 0;
-    for (int y = 0; y < colorSequence.length; y++) {
-      for (int x = 0; x < colorSequence[y].length; x++) {
-        colorSequence[y][x] = Colors.transparent;
-        guessedSequence[y][x] = Colors.transparent;
+    for (int y = 0; y < logic.colorSequence.length; y++) {
+      for (int x = 0; x < logic.colorSequence[y].length; x++) {
+        logic.colorSequence[y][x] = Colors.transparent;
+        logic.guessedSequence[y][x] = Colors.transparent;
       }
     }
     logic.resetVariables();

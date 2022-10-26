@@ -30,6 +30,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
           icon: Icon(
             Icons.circle,
             color: color.getColor(0),
+            size: 25,
           ),
           label: '',
           backgroundColor: Colors.red.shade300,
@@ -38,6 +39,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
           icon: Icon(
             Icons.circle,
             color: color.getColor(1),
+            size: 25,
           ),
           label: '',
           backgroundColor: Colors.yellow.shade300,
@@ -46,6 +48,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
           icon: Icon(
             Icons.circle,
             color: color.getColor(2),
+            size: 25,
           ),
           label: '',
           backgroundColor: Colors.green.shade300,
@@ -54,6 +57,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
           icon: Icon(
             Icons.circle,
             color: color.getColor(3),
+            size: 25,
           ),
           label: '',
           backgroundColor: Colors.blue.shade300,
@@ -62,6 +66,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
           icon: Icon(
             Icons.circle,
             color: color.getColor(4),
+            size: 25,
           ),
           label: '',
           backgroundColor: Colors.purple.shade300,
@@ -70,9 +75,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
           icon: Icon(
             Icons.circle,
             color: color.getColor(5),
+            size: 25,
           ),
           label: '',
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.grey.shade300,
         ),
       ],
       currentIndex: _selectedIndex,

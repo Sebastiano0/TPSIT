@@ -1,87 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:mastermind/widgets/gameColors.dart';
 
 class Logic {
-  List<Color> borderContainerColor = [
-    Colors.green,
-    Colors.transparent,
-    Colors.transparent,
-    Colors.transparent,
-    Colors.transparent,
-    Colors.transparent,
-    Colors.transparent,
-    Colors.transparent,
-    Colors.transparent,
-    Colors.transparent
-  ];
+  List<Color> borderContainerColor = [];
 
-  List<bool> enterVisibility = [
-    true,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false
-  ];
+  List<bool> enterVisibility = [];
 
-  List<bool> resultVisibility = [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false
-  ];
+  List<bool> resultVisibility = [];
 
-  List<bool?> checkboxValues = [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false
-  ];
+  List<bool?> checkboxValues = [];
+
+  List<List<Color>> guessedSequence = [];
+
+  List<List<Color>> colorSequence = [];
+
+  createArrays(rows) {
+    print("creating");
+    checkboxValues.clear();
+    resultVisibility.clear();
+    enterVisibility.clear();
+    borderContainerColor.clear();
+    guessedSequence.clear();
+    colorSequence.clear();
+    for (int i = 0; i < rows; i++) {
+      guessedSequence.add([
+        Colors.transparent,
+        Colors.transparent,
+        Colors.transparent,
+        Colors.transparent
+      ]);
+      colorSequence.add([
+        Colors.transparent,
+        Colors.transparent,
+        Colors.transparent,
+        Colors.transparent
+      ]);
+      for (int y = 0; y < 4; y++) {
+        checkboxValues.add(false);
+      }
+      if (i != 0) {
+        resultVisibility.add(false);
+        borderContainerColor.add(Colors.transparent);
+        enterVisibility.add(false);
+      } else {
+        resultVisibility.add(false);
+        borderContainerColor.add(Colors.green);
+        enterVisibility.add(true);
+      }
+    }
+  }
 
   resetVariables() {
     for (int i = 0; i < 40; i++) {

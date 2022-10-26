@@ -3,6 +3,7 @@ import 'package:mastermind/widgets/appBarButton.dart';
 import 'widgets/board.dart';
 import 'widgets/bottomNavigation.dart';
 import 'widgets/gameColors.dart';
+import 'widgets/graphic.dart';
 
 void main() => runApp(const MyApp());
 
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: _title,
       home: MyStatefulWidget(),
     );
@@ -29,18 +30,18 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   GameColors colors = GameColors();
-
   @override
   Widget build(BuildContext context) {
     colors.createColorSequence();
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-          title: const Text('Mastermind'),
-          backgroundColor: Colors.black,
-          actions: [AppBarButton(colors)]),
-      body: Board(colors),
-      bottomNavigationBar: BottomNavigation(colors),
-    );
+    return Graphic(colors);
+    // return Scaffold(
+    //   backgroundColor: Colors.black,
+    //   appBar: AppBar(
+    //       title: const Text('Mastermind'),
+    //       backgroundColor: Colors.black,
+    //       actions: [AppBarButton(colors)]),
+    //   body: Board(colors),
+    //   bottomNavigationBar: BottomNavigation(colors),
+    // );
   }
 }

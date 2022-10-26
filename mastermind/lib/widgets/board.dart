@@ -33,16 +33,17 @@ class _BoardState extends State<Board> {
   }
 
   generateRow(context, checkboxValues) {
-    List<Widget> row =
-        List.generate(10, (index) => singleRow(index, checkboxValues, context));
+    List<Widget> row = List.generate(
+        color.rows, (index) => singleRow(index, checkboxValues, context));
 
-    return ListView(
-        padding: EdgeInsets.zero,
-        reverse: true,
-        primary: false,
-        shrinkWrap: true,
-        scrollDirection: Axis.vertical,
-        children: row);
+    return Container(
+        child: ListView(
+            padding: EdgeInsets.zero,
+            reverse: true,
+            primary: false,
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            children: row));
   }
 
   singleRow(int i, checkboxValues, context) {
@@ -67,14 +68,17 @@ class _BoardState extends State<Board> {
                 ),
                 unselectedWidgetColor: const Color(0xFFF5F5F5),
               ),
-              child: Checkbox(
-                value: checkboxValues[(i * 4)] ??= false,
-                onChanged: (newValue) async {
-                  setState(() => checkboxValues[(i * 4)] = true);
-                  color.setColorSequence(i, 0);
-                },
-                activeColor: color.getColorSequence(i, 0),
-                checkColor: color.getColorSequence(i, 0),
+              child: Transform.scale(
+                scale: 2,
+                child: Checkbox(
+                  value: checkboxValues[(i * 4)] ??= false,
+                  onChanged: (newValue) async {
+                    setState(() => checkboxValues[(i * 4)] = true);
+                    color.setColorSequence(i, 0);
+                  },
+                  activeColor: color.getColorSequence(i, 0),
+                  checkColor: color.getColorSequence(i, 0),
+                ),
               ),
             ),
             Theme(
@@ -84,14 +88,17 @@ class _BoardState extends State<Board> {
                 ),
                 unselectedWidgetColor: const Color(0xFFF5F5F5),
               ),
-              child: Checkbox(
-                value: checkboxValues[(i * 4) + 1] ??= false,
-                onChanged: (newValue) async {
-                  setState(() => checkboxValues[(i * 4) + 1] = true);
-                  color.setColorSequence(i, 1);
-                },
-                activeColor: color.getColorSequence(i, 1),
-                checkColor: color.getColorSequence(i, 1),
+              child: Transform.scale(
+                scale: 2,
+                child: Checkbox(
+                  value: checkboxValues[(i * 4) + 1] ??= false,
+                  onChanged: (newValue) async {
+                    setState(() => checkboxValues[(i * 4) + 1] = true);
+                    color.setColorSequence(i, 1);
+                  },
+                  activeColor: color.getColorSequence(i, 1),
+                  checkColor: color.getColorSequence(i, 1),
+                ),
               ),
             ),
             Theme(
@@ -101,14 +108,17 @@ class _BoardState extends State<Board> {
                 ),
                 unselectedWidgetColor: const Color(0xFFF5F5F5),
               ),
-              child: Checkbox(
-                value: checkboxValues[(i * 4) + 2] ??= false,
-                onChanged: (newValue) async {
-                  setState(() => checkboxValues[(i * 4) + 2] = true);
-                  color.setColorSequence(i, 2);
-                },
-                activeColor: color.getColorSequence(i, 2),
-                checkColor: color.getColorSequence(i, 2),
+              child: Transform.scale(
+                scale: 2,
+                child: Checkbox(
+                  value: checkboxValues[(i * 4) + 2] ??= false,
+                  onChanged: (newValue) async {
+                    setState(() => checkboxValues[(i * 4) + 2] = true);
+                    color.setColorSequence(i, 2);
+                  },
+                  activeColor: color.getColorSequence(i, 2),
+                  checkColor: color.getColorSequence(i, 2),
+                ),
               ),
             ),
             Theme(
@@ -118,14 +128,17 @@ class _BoardState extends State<Board> {
                 ),
                 unselectedWidgetColor: const Color(0xFFF5F5F5),
               ),
-              child: Checkbox(
-                value: checkboxValues[(i * 4) + 3] ??= false,
-                onChanged: (newValue) async {
-                  setState(() => checkboxValues[(i * 4) + 3] = true);
-                  color.setColorSequence(i, 3);
-                },
-                activeColor: color.getColorSequence(i, 3),
-                checkColor: color.getColorSequence(i, 3),
+              child: Transform.scale(
+                scale: 2,
+                child: Checkbox(
+                  value: checkboxValues[(i * 4) + 3] ??= false,
+                  onChanged: (newValue) async {
+                    setState(() => checkboxValues[(i * 4) + 3] = true);
+                    color.setColorSequence(i, 3);
+                  },
+                  activeColor: color.getColorSequence(i, 3),
+                  checkColor: color.getColorSequence(i, 3),
+                ),
               ),
             ),
             Visibility(
@@ -137,16 +150,22 @@ class _BoardState extends State<Board> {
                     child: ElevatedButton.icon(
                       onPressed: () {
                         int? response = color.checkSequence(context);
-                        if (response != -1) {
-                          setState(() {});
+                        if (response == 1) {
                           color.logic.enterVisibility[i] = false;
                           color.logic.resultVisibility[i] = true;
-                          color.logic.enterVisibility[i + 1] = true;
-                          color.logic.borderContainerColor[i] =
-                              Colors.transparent;
-                          color.logic.borderContainerColor[i + 1] =
-                              Colors.green;
                         }
+                        if (response != -1 && response != 1) {
+                          color.logic.enterVisibility[i] = false;
+                          color.logic.resultVisibility[i] = true;
+
+                          color.logic.borderContainerColor[i] = Colors.white;
+                          if (i != 9) {
+                            color.logic.enterVisibility[i + 1] = true;
+                            color.logic.borderContainerColor[i + 1] =
+                                Colors.green;
+                          }
+                        }
+                        setState(() {});
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0x00101213)),
@@ -166,21 +185,21 @@ class _BoardState extends State<Board> {
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        crossAxisSpacing: 15,
-                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 0,
+                        mainAxisSpacing: 0,
                         childAspectRatio: 2,
                       ),
                       shrinkWrap: false,
                       scrollDirection: Axis.vertical,
                       children: [
                         Icon(Icons.circle,
-                            color: color.guessedSequence[i][0], size: 24),
+                            color: color.logic.guessedSequence[i][0], size: 24),
                         Icon(Icons.circle,
-                            color: color.guessedSequence[i][1], size: 24),
+                            color: color.logic.guessedSequence[i][1], size: 24),
                         Icon(Icons.circle,
-                            color: color.guessedSequence[i][2], size: 24),
+                            color: color.logic.guessedSequence[i][2], size: 24),
                         Icon(Icons.circle,
-                            color: color.guessedSequence[i][3], size: 24),
+                            color: color.logic.guessedSequence[i][3], size: 24),
                       ],
                     )))
           ],

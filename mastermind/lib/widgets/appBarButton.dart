@@ -1,24 +1,27 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
+import 'package:mastermind/main.dart';
 import 'package:mastermind/widgets/board.dart';
+import 'package:mastermind/widgets/graphic.dart';
+import 'package:mastermind/widgets/message.dart';
 import 'gameColors.dart';
 
 // ignore: must_be_immutable
 class AppBarButton extends StatefulWidget {
   // ignore: prefer_typing_uninitialized_variables
   var color;
-
-  AppBarButton(this.color, {super.key});
+  var reset;
+  AppBarButton(this.color, this.reset, {super.key});
 
   @override
   // ignore: library_private_types_in_public_api, no_logic_in_create_state
-  _AppBarButtonState createState() => _AppBarButtonState(color);
+  _AppBarButtonState createState() => _AppBarButtonState(color, reset);
 }
 
 class _AppBarButtonState extends State<AppBarButton> {
   GameColors color;
-  _AppBarButtonState(this.color);
-
+  var reset;
+  _AppBarButtonState(this.color, this.reset);
   @override
   void initState() {
     super.initState();
@@ -41,7 +44,7 @@ class _AppBarButtonState extends State<AppBarButton> {
               size: 25,
             ),
             onPressed: () {
-              print('info');
+              Message().info(context);
             },
           ),
           IconButton(
@@ -51,7 +54,8 @@ class _AppBarButtonState extends State<AppBarButton> {
               size: 25,
             ),
             onPressed: () {
-              reset();
+              widget.reset();
+              color.reset();
             },
           ),
           IconButton(
@@ -61,36 +65,11 @@ class _AppBarButtonState extends State<AppBarButton> {
               size: 25,
             ),
             onPressed: () {
-              print('settings');
+              Message().settings(context, color, reset);
             },
           ),
         ],
       ),
     );
-  }
-
-  reset() {
-    //colorSequence-guessedSequence
-    color.createColorSequence();
-    color.chance = 0;
-    for (int y = 0; y < color.colorSequence.length; y++) {
-      for (int x = 0; x < color.colorSequence[y].length; x++) {
-        color.colorSequence[y][x] = Colors.transparent;
-        color.guessedSequence[y][x] = Colors.transparent;
-      }
-    }
-    for (int i = 0; i < 40; i++) {
-      color.logic.checkboxValues[i] = false;
-      if (i < 10) {
-        if (i == 0) {
-          color.logic.enterVisibility[i] = true;
-          color.logic.borderContainerColor[i] = Colors.green;
-        } else {
-          color.logic.enterVisibility[i] = false;
-          color.logic.borderContainerColor[i] = Colors.transparent;
-        }
-        color.logic.resultVisibility[i] = false;
-      }
-    }
   }
 }
