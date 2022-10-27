@@ -129,9 +129,8 @@ class Message {
                 SizedBox(
                     height: 200,
                     child: SingleChildScrollView(
-                        padding: EdgeInsets.all(15),
-                        child: Container(
-                            child: Column(
+                        padding: const EdgeInsets.all(15),
+                        child: Column(
                           children: [
                             Text(
                               (''' REGOLE\n
@@ -157,8 +156,7 @@ Una volta creata la sequenza andrà premuto invio per visualizzare gli aiuti del
                                 color: color.secondaryColor,
                               ),
                             ),
-                            Image.asset('assets/inserimentoConModifica.gif',
-                                width: 15.0, height: 15.0),
+                            Image.asset('assets/inserimentoConModifica.gif'),
                             Text(
                               ("\nPer poter iniziare una nuova partita basta selezionare l'apposito comando."),
                               textAlign: TextAlign.center,
@@ -173,10 +171,9 @@ Una volta creata la sequenza andrà premuto invio per visualizzare gli aiuti del
                                 color: color.secondaryColor,
                               ),
                             ),
-                            Image.asset('assets/impostazioni.gif',
-                                width: 15.0, height: 15.0),
+                            Image.asset('assets/impostazioni.gif'),
                           ],
-                        ))))
+                        )))
               ],
             ),
           ),
