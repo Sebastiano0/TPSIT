@@ -11,64 +11,93 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  int _selectedIndex = 0;
   GameColors color;
   _SettingsState(this.color);
 
   @override
   void initState() {
     super.initState();
-    //_appState = ScopedModel.of<AppState>(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: <Widget>[
-      Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          const Text(
-            ('Permetti colori duplicati'),
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          Switch(
-            inactiveTrackColor: Colors.white,
-            value: color.multipleColorAllow,
-            onChanged: (newValue) async {
-              setState(() => color.multipleColorAllow = newValue);
-              color.reset();
-              widget.reset();
-            },
-          ),
-        ],
-      ),
-      Row(children: [
-        Text(
-          ('Combinazioni: ${color.rows.toInt().toString()}'),
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: Colors.white,
-          ),
+    return AlertDialog(
+      shape: RoundedRectangleBorder(
+          side: BorderSide(color: color.secondaryColor),
+          borderRadius: const BorderRadius.all(Radius.circular(25.0))),
+      contentPadding: const EdgeInsets.only(top: 10.0),
+      backgroundColor: color.mainColor,
+      title: Text(
+        ("Impostazioni"),
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: color.secondaryColor,
         ),
-        Slider(
-          activeColor: Colors.white,
-          inactiveColor: const Color(0xFF9E9E9E),
-          min: 1,
-          max: 50,
-          value: color.rows.toDouble(),
-          onChanged: (newValue) {
-            setState(() => color.rows = newValue.toInt());
-            
-            color.logic.createArrays(newValue.toInt());
-            color.reset();
-            widget.reset();
+      ),
+      content: SingleChildScrollView(
+        child: ListBody(children: <Widget>[
+          Column(children: <Widget>[
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  ('Permetti colori duplicati'),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: color.secondaryColor,
+                  ),
+                ),
+                Switch(
+                  inactiveTrackColor: color.secondaryColor,
+                  value: color.multipleColorAllow,
+                  onChanged: (newValue) async {
+                    setState(() => color.multipleColorAllow = newValue);
+                    color.reset();
+                    widget.reset();
+                  },
+                ),
+              ],
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  ('Light mode'),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: color.secondaryColor,
+                  ),
+                ),
+                Switch(
+                  inactiveTrackColor: color.secondaryColor,
+                  value: color.lightModeOn,
+                  onChanged: (newValues) async {
+                    setState(() => color.lightModeOn = newValues);
+                    if (color.mainColor == Colors.black) {
+                      color.lightMode();
+                    } else {
+                      color.darktMode();
+                    }
+                    widget.reset();
+                  },
+                ),
+              ],
+            ),
+          ]),
+        ]),
+      ),
+      actions: <Widget>[
+        TextButton(
+          child: const Text(
+            'Chiudi',
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
           },
         ),
-      ])
-    ]);
+      ],
+    );
   }
 }

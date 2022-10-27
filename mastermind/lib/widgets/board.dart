@@ -3,7 +3,6 @@ import 'gameColors.dart';
 
 class Board extends StatefulWidget {
   var color;
-
   Board(this.color, {super.key});
 
   @override
@@ -28,22 +27,18 @@ class _BoardState extends State<Board> {
     );
   }
 
-  void updateState() {
-    setState(() {});
-  }
-
   generateRow(context, checkboxValues) {
     List<Widget> row = List.generate(
         color.rows, (index) => singleRow(index, checkboxValues, context));
 
-    return Container(
-        child: ListView(
-            padding: EdgeInsets.zero,
-            reverse: true,
-            primary: false,
-            shrinkWrap: true,
-            scrollDirection: Axis.vertical,
-            children: row));
+    return ListView(
+        controller: ScrollController(initialScrollOffset: (606.7)),
+        padding: EdgeInsets.zero,
+        reverse: true,
+        primary: false,
+        shrinkWrap: true,
+        scrollDirection: Axis.vertical,
+        children: row);
   }
 
   singleRow(int i, checkboxValues, context) {
@@ -66,7 +61,7 @@ class _BoardState extends State<Board> {
                 checkboxTheme: const CheckboxThemeData(
                   shape: CircleBorder(),
                 ),
-                unselectedWidgetColor: const Color(0xFFF5F5F5),
+                unselectedWidgetColor: color.secondaryColor,
               ),
               child: Transform.scale(
                 scale: 2,
@@ -86,7 +81,7 @@ class _BoardState extends State<Board> {
                 checkboxTheme: const CheckboxThemeData(
                   shape: CircleBorder(),
                 ),
-                unselectedWidgetColor: const Color(0xFFF5F5F5),
+                unselectedWidgetColor: color.secondaryColor,
               ),
               child: Transform.scale(
                 scale: 2,
@@ -106,7 +101,7 @@ class _BoardState extends State<Board> {
                 checkboxTheme: const CheckboxThemeData(
                   shape: CircleBorder(),
                 ),
-                unselectedWidgetColor: const Color(0xFFF5F5F5),
+                unselectedWidgetColor: color.secondaryColor,
               ),
               child: Transform.scale(
                 scale: 2,
@@ -126,7 +121,7 @@ class _BoardState extends State<Board> {
                 checkboxTheme: const CheckboxThemeData(
                   shape: CircleBorder(),
                 ),
-                unselectedWidgetColor: const Color(0xFFF5F5F5),
+                unselectedWidgetColor: color.secondaryColor,
               ),
               child: Transform.scale(
                 scale: 2,
@@ -146,7 +141,7 @@ class _BoardState extends State<Board> {
                 child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.white)),
+                        border: Border.all(color: color.secondaryColor)),
                     child: ElevatedButton.icon(
                       onPressed: () {
                         int? response = color.checkSequence(context);
@@ -158,8 +153,9 @@ class _BoardState extends State<Board> {
                           color.logic.enterVisibility[i] = false;
                           color.logic.resultVisibility[i] = true;
 
-                          color.logic.borderContainerColor[i] = Colors.white;
-                          if (i != 9) {
+                          color.logic.borderContainerColor[i] =
+                              color.secondaryColor;
+                          if (i != color.rows - 1) {
                             color.logic.enterVisibility[i + 1] = true;
                             color.logic.borderContainerColor[i + 1] =
                                 Colors.green;
@@ -168,12 +164,19 @@ class _BoardState extends State<Board> {
                         setState(() {});
                       },
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0x00101213)),
-                      icon: const Icon(
+                          backgroundColor: color.mainColor),
+                      icon: Icon(
                         Icons.check_circle,
+                        color: color.secondaryColor,
                         size: 15,
                       ),
-                      label: const Text("Enter"),
+                      label: Text(
+                        ('Enter'),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: color.secondaryColor,
+                        ),
+                      ),
                     ))),
             Visibility(
                 visible: color.logic.resultVisibility[i],

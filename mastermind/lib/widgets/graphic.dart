@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:mastermind/widgets/board.dart';
 import 'gameColors.dart';
 import 'package:mastermind/widgets/appBarButton.dart';
-import 'board.dart';
 import 'bottomNavigation.dart';
 
 // ignore: must_be_immutable
@@ -22,12 +21,6 @@ class _GraphicState extends State<Graphic> {
   GameColors color;
   _GraphicState(this.color);
 
-  @override
-  void initState() {
-    super.initState();
-    //_appState = ScopedModel.of<AppState>(context);
-  }
-
   void reset() {
     setState(() {});
   }
@@ -36,15 +29,19 @@ class _GraphicState extends State<Graphic> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.black,
+      backgroundColor: color.mainColor,
       appBar: AppBar(
-          title: const Text('Mastermind'),
-          backgroundColor: Colors.black,
+          title: Text(
+            'Mastermind',
+            style: TextStyle(
+              color: color.secondaryColor,
+            ),
+          ),
+          backgroundColor: color.mainColor,
           actions: [AppBarButton(color, reset)]),
       body: SingleChildScrollView(
-        controller: ScrollController(initialScrollOffset: 606.7),
-        child: Board(color, key: UniqueKey()),
-      ),
+          controller: ScrollController(initialScrollOffset: (606.7)),
+          child: Board(color, key: UniqueKey())),
       bottomNavigationBar: BottomNavigation(color),
     );
   }

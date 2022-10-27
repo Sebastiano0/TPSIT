@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mastermind/widgets/board.dart';
 import 'dart:math';
 import 'package:mastermind/widgets/message.dart';
 import 'logic.dart';
@@ -9,7 +8,13 @@ class GameColors {
 
   Logic logic = Logic();
 
+  Color mainColor = Colors.black;
+  Color secondaryColor = Colors.white;
+  Color lastBackgroundColorBottomNavigation = Colors.grey.shade300;
+
+  bool lightModeOn = false;
   bool multipleColorAllow = false;
+
   int rows = 10;
 
   int _selectedIndex = 0;
@@ -22,16 +27,46 @@ class GameColors {
     Colors.white,
   ];
 
+  lightMode() {
+    mainColor = Colors.white;
+    secondaryColor = Colors.black;
+    colors[5] = Colors.black;
+    lightModeOn = true;
+    lastBackgroundColorBottomNavigation = Colors.grey.shade900;
+    changeColorAlreadySet(Colors.white, Colors.black);
+  }
+
+  changeColorAlreadySet(Color toCanghe, Color changed) {
+    for (int y = 0; y < logic.colorSequence.length; y++) {
+      for (int x = 0; x < logic.colorSequence[y].length; x++) {
+        if (logic.colorSequence[y][x] == toCanghe) {
+          logic.colorSequence[y][x] = changed;
+        }
+      }
+    }
+  }
+
+  darktMode() {
+    mainColor = Colors.black;
+    secondaryColor = Colors.white;
+    colors[5] = Colors.white;
+    lightModeOn = false;
+    lastBackgroundColorBottomNavigation = Colors.grey.shade300;
+    changeColorAlreadySet(Colors.black, Colors.white);
+  }
+
   int chance = 0;
 
   List<Color> colorSequenceToGuess = [];
 
   createColorSequence() {
+    if (rows == 0) {
+      rows = 10;
+    }
     Color temp;
     colorSequenceToGuess.clear();
     for (int i = 0; i < 4;) {
       temp = colors[Random().nextInt(6)];
-      print(multipleColorAllow);
       if (!colorSequenceToGuess.contains(temp) || multipleColorAllow) {
         colorSequenceToGuess.add(temp);
         i++;
@@ -46,7 +81,7 @@ class GameColors {
 
   checkSequence(context) {
     if (logic.colorSequence[chance].contains(Colors.transparent)) {
-      Message().completeCombination(context);
+      Message().completeCombination(context, this);
       return -1;
     }
     logic.guessedSequence[chance].clear();
@@ -54,22 +89,25 @@ class GameColors {
     wrongPlace = 0;
     List<Color> tempListColor = List.from(logic.colorSequence[chance]);
     for (int i = 0; i < 4; i++) {
-      // tempListColor.add(colorSequence[i]);
       if (colorSequenceToGuess.contains(tempListColor[i])) {
         Color actualColor = tempListColor[i];
+
         if (colorSequenceToGuess[i] == actualColor) {
           correctPlace++;
           logic.guessedSequence[chance].add(Colors.green);
         } else {
           tempListColor[i] = Colors.transparent;
-          if (!tempListColor.contains(actualColor)) {
+          if (!tempListColor.contains(actualColor) ||
+              (multipleColorAllow &&
+                  ((colorSequenceToGuess.where((e) => e == actualColor).length >
+                      tempListColor.where((e) => e == actualColor).length)))) {
             wrongPlace++;
           }
         }
       }
     }
     for (int i = 0; i < wrongPlace; i++) {
-      logic.guessedSequence[chance].add(Colors.white);
+      logic.guessedSequence[chance].add(Colors.yellow);
     }
     while (logic.guessedSequence[chance].length < 4) {
       logic.guessedSequence[chance].add(Colors.blueGrey);
@@ -80,7 +118,7 @@ class GameColors {
       return 1;
     }
     chance++;
-    if (chance == 10) {
+    if (chance == rows) {
       Message().endGame(
           context, colorSequenceToGuess, Colors.red, "Hai perso", this);
       return;

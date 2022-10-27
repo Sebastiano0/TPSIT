@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mastermind/widgets/gameColors.dart';
 
 class Logic {
   List<Color> borderContainerColor = [];
@@ -15,7 +14,6 @@ class Logic {
   List<List<Color>> colorSequence = [];
 
   createArrays(rows) {
-    print("creating");
     checkboxValues.clear();
     resultVisibility.clear();
     enterVisibility.clear();

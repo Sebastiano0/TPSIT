@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'gameColors.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -15,12 +14,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
   int _selectedIndex = 0;
   GameColors color;
   _BottomNavigationState(this.color);
-
-  @override
-  void initState() {
-    super.initState();
-    //_appState = ScopedModel.of<AppState>(context);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +71,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
             size: 25,
           ),
           label: '',
-          backgroundColor: Colors.grey.shade300,
+          backgroundColor: color.lastBackgroundColorBottomNavigation,
         ),
       ],
       currentIndex: _selectedIndex,

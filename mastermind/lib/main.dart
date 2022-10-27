@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mastermind/widgets/appBarButton.dart';
-import 'widgets/board.dart';
-import 'widgets/bottomNavigation.dart';
 import 'widgets/gameColors.dart';
 import 'widgets/graphic.dart';
 
@@ -14,7 +11,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: _title,
       home: MyStatefulWidget(),
     );
@@ -30,18 +27,10 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   GameColors colors = GameColors();
+
   @override
   Widget build(BuildContext context) {
     colors.createColorSequence();
     return Graphic(colors);
-    // return Scaffold(
-    //   backgroundColor: Colors.black,
-    //   appBar: AppBar(
-    //       title: const Text('Mastermind'),
-    //       backgroundColor: Colors.black,
-    //       actions: [AppBarButton(colors)]),
-    //   body: Board(colors),
-    //   bottomNavigationBar: BottomNavigation(colors),
-    // );
   }
 }

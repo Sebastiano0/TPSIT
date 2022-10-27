@@ -1,8 +1,5 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
-import 'package:mastermind/main.dart';
-import 'package:mastermind/widgets/board.dart';
-import 'package:mastermind/widgets/graphic.dart';
 import 'package:mastermind/widgets/message.dart';
 import 'gameColors.dart';
 
@@ -22,11 +19,6 @@ class _AppBarButtonState extends State<AppBarButton> {
   GameColors color;
   var reset;
   _AppBarButtonState(this.color, this.reset);
-  @override
-  void initState() {
-    super.initState();
-    //_appState = ScopedModel.of<AppState>(context);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,19 +30,19 @@ class _AppBarButtonState extends State<AppBarButton> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.info_outline_rounded,
-              color: Colors.white,
+              color: color.secondaryColor,
               size: 25,
             ),
             onPressed: () {
-              Message().info(context);
+              Message().info(context, color);
             },
           ),
           IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.replay,
-              color: Colors.white,
+              color: color.secondaryColor,
               size: 25,
             ),
             onPressed: () {
@@ -59,9 +51,9 @@ class _AppBarButtonState extends State<AppBarButton> {
             },
           ),
           IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.settings,
-              color: Colors.white,
+              color: color.secondaryColor,
               size: 25,
             ),
             onPressed: () {
