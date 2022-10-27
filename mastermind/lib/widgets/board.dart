@@ -164,7 +164,7 @@ class _BoardState extends State<Board> {
                         setState(() {});
                       },
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: color.mainColor),
+                          backgroundColor: Colors.transparent),
                       icon: Icon(
                         Icons.check_circle,
                         color: color.secondaryColor,

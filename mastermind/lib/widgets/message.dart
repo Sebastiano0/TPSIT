@@ -24,13 +24,11 @@ class Message {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Expanded(
-                  child: Text(
-                    ('Inserisci tutti e 4 i colori per la combinazione'),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: color.secondaryColor,
-                    ),
+                Text(
+                  ('Inserisci tutti e 4 i colori per la combinazione'),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: color.secondaryColor,
                   ),
                 ),
               ],
