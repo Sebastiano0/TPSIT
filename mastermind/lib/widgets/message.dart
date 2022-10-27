@@ -117,7 +117,7 @@ class Message {
           contentPadding: const EdgeInsets.only(top: 10.0),
           backgroundColor: color.mainColor,
           title: Text(
-            ("Regole"),
+            ("Regole e istruzioni"),
             textAlign: TextAlign.center,
             style: TextStyle(
               color: color.secondaryColor,
@@ -129,19 +129,54 @@ class Message {
                 SizedBox(
                     height: 200,
                     child: SingleChildScrollView(
-                      child: Text(
-                        ('''L’ utente fa il suo primo tentativo, cercando di indovinare il codice. In risposta visualizzerà degli aiuti che comunicano:\n
+                        padding: EdgeInsets.all(15),
+                        child: Container(
+                            child: Column(
+                          children: [
+                            Text(
+                              (''' REGOLE\n
+Mastermind è un gioco di crittoanalisi nel quale il giocatore deve indovinare un codice di 4 colori tra 6 a scelta. \n
+Ad ogni tentativo in risposta visualizzerà degli aiuti che comunicano:\n
 \u2022Il numero di cifre giuste al posto giusto, cioè le cifre del tentativo che sono effettivamente presenti nel codice al posto tentato, con pioli verdi.\n
-\u2022Il numero di cifre giuste al posto sbagliato, cioè le cifre del tentativo che sono effettivamente presenti nel codice, ma non al posto tentato, con pioli bianchi.\n\n
-Non saranno comunicate quali cifre sono giuste o sbagliate ma solo quante. Se si riesce ad indovinare il codice entro il numero di tentativi predeterminati (10-50) allora quest'ultimo vince la partita.
-
+\u2022Il numero di cifre giuste al posto sbagliato, cioè le cifre del tentativo che sono effettivamente presenti nel codice, ma non al posto tentato, con pioli gialli.\n
+Non saranno comunicate quali cifre sono giuste o sbagliate ma solo quante. Se si riesce ad indovinare il codice entro 10 tentativi allora quest'ultimo vince la partita.\n\n
+ISTRUZIONI:\n
+Per poter giocare occorre creare una sequenza di colori, che si possono selezionare da menù in basso, inserendone uno in ogni cerchio della riga visualizzata in verde.
+Una volta creata la sequenza andrà premuto invio per visualizzare gli aiuti del sistema.\n
 '''),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: color.secondaryColor,
-                        ),
-                      ),
-                    ))
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: color.secondaryColor,
+                              ),
+                            ),
+                            Image.asset('assets/inserimento.gif'),
+                            Text(
+                              ('\nÉ possibile modificare la sequenza quante volte si vuole fino alla pressione del bottone invio.\n'),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: color.secondaryColor,
+                              ),
+                            ),
+                            Image.asset('assets/inserimentoConModifica.gif',
+                                width: 15.0, height: 15.0),
+                            Text(
+                              ("\nPer poter iniziare una nuova partita basta selezionare l'apposito comando."),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: color.secondaryColor,
+                              ),
+                            ),
+                            Text(
+                              ('Nella casella impostazioni si possono permettere sequenze con colori uguali ripetuti e passare alla modalità light(bianca).'),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: color.secondaryColor,
+                              ),
+                            ),
+                            Image.asset('assets/impostazioni.gif',
+                                width: 15.0, height: 15.0),
+                          ],
+                        ))))
               ],
             ),
           ),
