@@ -39,7 +39,9 @@ class GameColors {
   changeColorAlreadySet(Color toCanghe, Color changed) {
     for (int y = 0; y < logic.colorSequence.length; y++) {
       for (int x = 0; x < logic.colorSequence[y].length; x++) {
-        colorSequenceToGuess[x] = changed;
+        if(colorSequenceToGuess[x] == toCanghe){
+          colorSequenceToGuess[x] = changed;
+        }
         if (logic.colorSequence[y][x] == toCanghe) {
           logic.colorSequence[y][x] = changed;
         }
