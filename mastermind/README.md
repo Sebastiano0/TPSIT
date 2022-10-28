@@ -15,7 +15,7 @@ Il codice appare suddiviso in: Appbar, body e bottomNavigationBar..
 
 In particolare viene utilizzata la **bottomNavitationBar** per ottenere animazioni già preimpostate, un'altro suo vantaggio è quello di ricevere di default l'indice dell'elemento del menù selezionato. Queste due funzionalità permettono di accorciare il codice e renderlo più pulito.
 
-![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
+![Alt Text]([https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif](https://github.com/Sebastiano0/TPSIT/blob/main/mastermind/assets/inserimento.gif))
 
 Molto meno efficiente invece è la scelta di creare gli spazi nei quali inserire la combinazione come dei [checkbox](https://api.flutter.dev/flutter/material/Checkbox-class.html) perchè richiede molto più codice ed è lento, una scelta che sarebbe stata migliore era mettere dei [Icon Button](https://mui.com/material-ui/api/icon-button/).
 
