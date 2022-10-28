@@ -1,16 +1,94 @@
-# mastermind
+# Mastermind
 
-A new Flutter project.
+Questa cartella di progetto contiene il sorgente per il gioco [mastermind](https://it.wikipedia.org/wiki/Mastermind), un gioco di crittoanalisi nel quale bisogna indovinare una sequenza di colori data.
 
-## Getting Started
+## Aggiunte personali
 
-This project is a starting point for a Flutter application.
+In aggiunta alle funzionalità base della [consegna](https://gitlab.com/zuclassroom2223/consegne/-/blob/main/flutter_01_mastermind.md) sono state aggiunte delle varianti:
+ - Possibilità di creare una sequenza con un colore ripetuto più volte
+ - Passare dalla schermata in modalità bianca o nera
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Scelte implementative
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Il codice appare suddiviso in: Appbar, body e bottomNavigationBar..
+
+In particolare viene utilizzata la **bottomNavitationBar** per ottenere animazioni già preimpostate, un'altro suo vantaggio è quello di ricevere di default l'indice dell'elemento del menù selezionato. Queste due funzionalità permettono di accorciare il codice e renderlo più pulito.
+
+![Alt Text](https://github.com/Sebastiano0/TPSIT/blob/main/mastermind/assets/inserimento.gif)
+
+Molto meno efficiente invece è la scelta di creare gli spazi nei quali inserire la combinazione come dei [checkbox](https://api.flutter.dev/flutter/material/Checkbox-class.html) perchè richiede molto più codice ed è lento, una scelta che sarebbe stata migliore era mettere dei [Icon Button](https://mui.com/material-ui/api/icon-button/).
+
+La funzione **createArrays()** genera le righe, quest'ultime vengono create dinamicamente quindi basta cambiare una variabile (rows) per avere più o meno possibilità di indovinare. Questa creazione dinamica, più inefficiente, è per garantire una aggiunta più facile di nuove features quali la possibilità di creare le righe a scelta dell’utente.
+```dart
+createArrays(rows) {
+    checkboxValues.clear();
+    resultVisibility.clear();
+    enterVisibility.clear();
+    borderContainerColor.clear();
+    guessedSequence.clear();
+    colorSequence.clear();
+    for (int i = 0; i < rows; i++) {
+      guessedSequence.add([
+        Colors.transparent,
+        Colors.transparent,
+        Colors.transparent,
+        Colors.transparent
+      ]);
+      colorSequence.add([
+        Colors.transparent,
+        Colors.transparent,
+        Colors.transparent,
+        Colors.transparent
+      ]);
+      for (int y = 0; y < 4; y++) {
+        checkboxValues.add(false);
+      }
+      if (i != 0) {
+        resultVisibility.add(false);
+        borderContainerColor.add(Colors.transparent);
+        enterVisibility.add(false);
+      } else {
+        resultVisibility.add(false);
+        borderContainerColor.add(Colors.green);
+        enterVisibility.add(true);
+      }
+    }
+}
+```
+Tale funzione così dispendiosa viene chiamata solo all'inizio del gioco, o nel caso di scelta di righe dell'utente, quando questo valore viene cambiato. **Non** viene chiamata ogni qual volta si resetta il gioco Per cui esiste la funzione che resetta le variabili:
+```dart
+resetVariables() {
+    for (int i = 0; i < 40; i++) {
+      checkboxValues[i] = false;
+      if (i < 10) {
+        if (i == 0) {
+          enterVisibility[i] = true;
+          borderContainerColor[i] = Colors.green;
+        } else {
+          enterVisibility[i] = false;
+          borderContainerColor[i] = Colors.transparent;
+        }
+        resultVisibility[i] = false;
+      }
+    }
+  }
+ ```
+
+Essendo impossibile chiamare il metodo **setState()** all'interno della classe in cui viene chiamato il metodo **resetVariables()** per fare in modo che ci sia un aggiornamento dello stato senza interazione ad parte dell'utente passo a tale classe un metodo della classe padre che aggiorna appunto lo stato.
+
+```dart
+void reset() {
+    setState(() {});
+}
+```
+## Riferimenti
+[BottomNavigationBar](https://api.flutter.dev/flutter/material/BottomNavigationBar-class.html)
+
+[CHeckbox](https://api.flutter.dev/flutter/material/Checkbox-class.html)
+
+[IconButton](https://api.flutter.dev/flutter/material/IconButton-class.html)
+
+[AppBar](https://api.flutter.dev/flutter/material/AppBar-class.html)
+
+[setState](https://api.flutter.dev/flutter/widgets/State/setState.html)
