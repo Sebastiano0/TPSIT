@@ -6,7 +6,7 @@ Questa cartella di progetto contiene il sorgente per il gioco [mastermind](https
 
 In aggiunta alle funzionalità base della [consegna](https://gitlab.com/zuclassroom2223/consegne/-/blob/main/flutter_01_mastermind.md) sono state aggiunte delle varianti:
  - Possibilità di creare una sequenza con un colore ripetuto più volte
- - Passare di avere la schermata in modalità bianca o nera
+ - Passare dalla schermata in modalità bianca o nera
 
 
 ## Scelte implementative
