@@ -104,6 +104,8 @@ lightMode() {
  }
 ```
 
+Con la classe ``AbsorbPointer()`` si impedisce di modificare le combinazioni già date, o future. 
+
 ## Riferimenti
 [BottomNavigationBar](https://api.flutter.dev/flutter/material/BottomNavigationBar-class.html)
 
@@ -124,3 +126,11 @@ lightMode() {
 [Basic widgets](https://docs.flutter.dev/development/ui/widgets/basics)
 
 [Column](https://api.flutter.dev/flutter/widgets/Column-class.html)
+
+[Add images/gif](https://docs.flutter.dev/development/ui/assets-and-images)
+
+[AlertDialog](https://api.flutter.dev/flutter/material/AlertDialog-class.html)
+
+[Visibility](https://api.flutter.dev/flutter/widgets/Visibility-class.html)
+
+[AbsorbPointer](https://api.flutter.dev/flutter/widgets/AbsorbPointer-class.html)
