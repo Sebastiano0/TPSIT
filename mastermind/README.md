@@ -119,4 +119,8 @@ lightMode() {
 
 [Row](https://api.flutter.dev/flutter/widgets/Row-class.html)
 
+[Cookbook](https://docs.flutter.dev/cookbook)
+
+[Basic widgets](https://docs.flutter.dev/development/ui/widgets/basics)
+
 [Column](https://api.flutter.dev/flutter/widgets/Column-class.html)
