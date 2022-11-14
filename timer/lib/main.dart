@@ -8,8 +8,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'noti.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-      
+    FlutterLocalNotificationsPlugin();
+
 void main() {
   runApp(const MyApp());
 }
@@ -37,8 +37,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  
-
   var _currentValueMinutes = 0;
   var _currentValueSeconds = 1;
   var _currentValueHours = 0;
@@ -119,17 +117,20 @@ class _MyHomePageState extends State<MyHomePage> {
       }).take(count * 10);
 
       await controller.addStream(stream);
-
-      if (progress == 0) {}
     }
-    _currentValueSeconds--;
+    // _currentValueSeconds--;
     initialCount = 0;
     sub.cancel();
     paused = true;
     numberPickerVisibility = true;
     Noti.initialize(flutterLocalNotificationsPlugin);
 
-    if (!stopped) {
+    if (!stopped && count != 0) {
+      Noti.showBigTextNotification(
+          title: "Changed state",
+          body: "Your timer is ended",
+          fln: flutterLocalNotificationsPlugin);
+
       bytes = await rootBundle.load(path); //load audio from assets
       Uint8List audiobytes =
           bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
@@ -139,15 +140,19 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  finish() {}
-
   pause() {
     Noti.showBigTextNotification(
-        title: "Timer app", body: "Your timer has been paused", fln: flutterLocalNotificationsPlugin);
+        title: "Changed state",
+        body: "Your timer has been paused",
+        fln: flutterLocalNotificationsPlugin);
     sub.pause();
   }
 
   stop() {
+    Noti.showBigTextNotification(
+        title: "Changed state",
+        body: "Your timer has been cancelled",
+        fln: flutterLocalNotificationsPlugin);
     stopped = true;
     numberPickerVisibility = true;
     sub.cancel();
@@ -241,6 +246,28 @@ class _MyHomePageState extends State<MyHomePage> {
                       const TextStyle(fontSize: 30, color: Colors.white),
                 ),
               ])),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Visibility(
+                  visible: numberPickerVisibility,
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                        backgroundColor: Colors.grey.shade800,
+                        textStyle: const TextStyle(
+                          color: Colors.white,
+                        )),
+                    onPressed: () {
+                      _currentValueHours = 0;
+                      _currentValueMinutes = 2;
+                      _currentValueSeconds = 0;
+                      play();
+                    },
+                    child: const Text(
+                        "Lava i denti:                                                           2 min"),
+                  ))
+            ],
+          ),
           Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
             Visibility(
                 visible: !numberPickerVisibility,
