@@ -49,6 +49,9 @@ class _MyHomePageState extends State<MyHomePage> {
   dynamic controller;
   bool numberPickerVisibility = true;
   bool stopped = false;
+  var fractionProgress;
+  bool hasBeenPaused = false;
+  int count = 0;
 
   String path = "assets/audio/audio.mp3";
   final AudioPlayer player = AudioPlayer();
@@ -76,17 +79,25 @@ class _MyHomePageState extends State<MyHomePage> {
   play() async {
     numberPickerVisibility = false;
     controller = StreamController<int>(
-      onPause: () => print('Paused'),
+      onPause: () => hasBeenPaused = true,
       onResume: () => print('Resumed'),
-      onCancel: () => progress = 1.0,
+      onCancel: () => {hasBeenPaused = false, progress = 1.0},
       onListen: () => print('Listens'),
     );
 
-    int count = (_currentValueHours * 24) +
-        (_currentValueMinutes * 60) +
-        _currentValueSeconds;
-
-    var fractionProgress = 1 / count / 10;
+    if (!hasBeenPaused) {
+      count = (_currentValueHours * 24) +
+          (_currentValueMinutes * 60) +
+          _currentValueSeconds;
+      fractionProgress = 1 / count / 10;
+      hasBeenPaused = false;
+    } else {
+      count = (_currentValueHours * 24) +
+          (_currentValueMinutes * 60) +
+          _currentValueSeconds;
+    }
+    print("object $fractionProgress");
+    print("1 $count");
     sub = controller.stream.listen((int data) async {
       setState(() {
         progress = progress - fractionProgress;
@@ -127,7 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     if (!stopped && count != 0) {
       Noti.showBigTextNotification(
-          title: "Changed state",
+          title: "Times over",
           body: "Your timer is ended",
           fln: flutterLocalNotificationsPlugin);
 
@@ -141,18 +152,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   pause() {
-    Noti.showBigTextNotification(
-        title: "Changed state",
-        body: "Your timer has been paused",
-        fln: flutterLocalNotificationsPlugin);
     sub.pause();
+    paused = true;
   }
 
   stop() {
-    Noti.showBigTextNotification(
-        title: "Changed state",
-        body: "Your timer has been cancelled",
-        fln: flutterLocalNotificationsPlugin);
     stopped = true;
     numberPickerVisibility = true;
     sub.cancel();
@@ -258,9 +262,11 @@ class _MyHomePageState extends State<MyHomePage> {
                           color: Colors.white,
                         )),
                     onPressed: () {
+                      numberPickerVisibility = false;
                       _currentValueHours = 0;
                       _currentValueMinutes = 2;
                       _currentValueSeconds = 0;
+                      paused = false;
                       play();
                     },
                     child: const Text(
