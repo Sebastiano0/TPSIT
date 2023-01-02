@@ -53,7 +53,8 @@ class ChatClient {
 
   void messageHandler(data) {
     String message = new String.fromCharCodes(data).trim();
-    distributeMessage(this, '${_address}:${_port} Message: $message');
+    String time = getTime();
+    distributeMessage(this, '$time, ${message.split("pattern")}');
   }
 
   void errorHandler(error) {
@@ -71,4 +72,10 @@ class ChatClient {
   void write(String message) {
     _socket.write(message);
   }
+}
+
+String getTime() {
+  DateTime now = DateTime.now();
+  String formattedDate = now.toString().split('.')[0];
+  return formattedDate;
 }
