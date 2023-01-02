@@ -53,8 +53,10 @@ class ChatClient {
 
   void messageHandler(data) {
     String message = new String.fromCharCodes(data).trim();
+    String name = message.split(":")[0];
     String time = getTime();
-    distributeMessage(this, '$time, ${message.split("pattern")}');
+    distributeMessage(this,
+        '$time Messaggio da $name -->${message.substring(message.indexOf(":") + 1)}');
   }
 
   void errorHandler(error) {
