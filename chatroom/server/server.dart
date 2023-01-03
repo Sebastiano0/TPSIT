@@ -54,9 +54,14 @@ class ChatClient {
   void messageHandler(data) {
     String message = new String.fromCharCodes(data).trim();
     String name = message.split(":")[0];
+    String messageContent = message.substring(message.indexOf(":") + 1);
     String time = getTime();
-    distributeMessage(this,
-        '$time Messaggio da $name -->${message.substring(message.indexOf(":") + 1)}');
+    if (messageContent.length > 126) {
+      distributeMessage(this,
+          '$time Messaggio da $name non supportato, supera la lunghezza massima.');
+    } else {
+      distributeMessage(this, '$time Messaggio da $name -->$messageContent');
+    }
   }
 
   void errorHandler(error) {

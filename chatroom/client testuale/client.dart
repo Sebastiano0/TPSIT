@@ -17,8 +17,13 @@ void main() {
   });
 
   // connect standard in to the socket
-  stdin.listen((data) =>
-      socket.write(name! + ": " + String.fromCharCodes(data).trim() + '\n'));
+  stdin.listen((data) {
+    String message = String.fromCharCodes(data).trim();
+    if (message.length > 126) {
+      print("Il messaggio è troppo lungo per essere inviato al server.");
+    }
+    socket.write(name! + ": " + message + '\n');
+  });
 }
 
 void dataHandler(data) {
