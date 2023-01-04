@@ -7,7 +7,7 @@ import 'dart:io';
 late ServerSocket server;
 List<ChatClient> clients = [];
 
-void main() {
+void main() async {
   ServerSocket.bind(InternetAddress.anyIPv4, 3000).then((ServerSocket socket) {
     server = socket;
     server.listen((client) {
@@ -16,7 +16,7 @@ void main() {
   });
 }
 
-void handleConnection(Socket client) {
+void handleConnection(Socket client) async {
   print('Connection from '
       '${client.remoteAddress.address}:${client.remotePort}');
 
@@ -51,7 +51,7 @@ class ChatClient {
         onError: errorHandler, onDone: finishedHandler);
   }
 
-  void messageHandler(data) {
+  void messageHandler(data) async {
     String message = new String.fromCharCodes(data).trim();
     String name = message.split(":")[0];
     String messageContent = message.substring(message.indexOf(":") + 1);
