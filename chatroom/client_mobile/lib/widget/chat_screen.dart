@@ -1,4 +1,6 @@
+import 'package:client_mobile/data/messages_list.dart';
 import 'package:client_mobile/logic/connection.dart';
+import 'package:client_mobile/widget/alert_message.dart';
 import 'package:flutter/material.dart';
 import 'package:client_mobile/widget/chat_message.dart';
 import 'package:client_mobile/logic/app_data.dart';
@@ -16,25 +18,49 @@ class _ChatScreenState extends State<ChatScreen> {
   final Connection connection;
   final _textController = TextEditingController();
   final _scrollController = ScrollController();
-  final List<String> _messages = [];
 
   _ChatScreenState(this.connection);
 
-  void _sendMessage() {
-    // Aggiungi il nuovo messaggio alla lista
-    setState(() {
-      _messages.add(_textController.text);
+  @override
+  void initState() {
+    super.initState();
+    widget.connection.messageController.stream.listen((message) {
+      setState(() {
+        MessagesList.messages.add(Message(connection.getTimestamp(message),
+            connection.getSender(message), connection.getMessage(message)));
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      });
     });
-    // Invia il messaggio al server tramite la connessione
-    connection.sendMessage(_textController.text);
-    // Pulisci il campo di testo
-    _textController.clear();
-    // Fai scorrere la lista fino all'ultimo messaggio
-    _scrollController.animateTo(
-      _scrollController.position.maxScrollExtent,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeOut,
-    );
+  }
+
+  void _sendMessage() {
+    String message = _textController.text;
+    if (message.length <= 126) {
+      // Aggiungi il nuovo messaggio alla lista
+      setState(() {
+        MessagesList.messages.add(Message(
+            DateTime.now().toString().split('.')[0],
+            AppData.username,
+            message));
+      });
+      // Invia il messaggio al server tramite la connessione
+      connection.sendMessage(message);
+      // Pulisci il campo di testo
+      _textController.clear();
+      // Fai scorrere la lista fino all'ultimo messaggio
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    } else {
+      AlerMessage().exceededMaxLength(context);
+      setState(() {});
+    }
   }
 
   @override
@@ -48,10 +74,12 @@ class _ChatScreenState extends State<ChatScreen> {
           Expanded(
             child: ListView.builder(
               controller: _scrollController,
-              itemCount: _messages.length,
+              itemCount: MessagesList.messages.length,
               itemBuilder: (context, index) {
                 return ChatMessage(
-                    sender: AppData.username, text: _messages[index]);
+                    sender: MessagesList.messages[index].sender,
+                    text: MessagesList.messages[index].text,
+                    timeStamp: MessagesList.messages[index].timestamp);
               },
             ),
           ),

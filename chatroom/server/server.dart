@@ -22,8 +22,8 @@ void handleConnection(Socket client) async {
 
   clients.add(ChatClient(client));
 
-  client.write("Welcome to dart-chat! "
-      "There are ${clients.length - 1} other clients\n");
+  // client.write("Welcome to dart-chat! "
+  //     "There are ${clients.length - 1} other clients\n");
 }
 
 void removeClient(ChatClient client) {
