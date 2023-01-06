@@ -1,4 +1,4 @@
-# Chatroom Client 
+# Chatroom Client Testuale
 
 Questa è un **client** di una chatroom che consente agli utenti di connettersi a un [server locale](https://github.com/Sebastiano0/TPSIT/tree/main/chatroom/server) per inviare e ricevere messaggi di testo.
 
