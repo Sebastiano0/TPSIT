@@ -10,12 +10,12 @@ Per utilizzare l'applicazione, segui questi passaggi:
 - Utilizzare un [client di chat](https://github.com/Sebastiano0/TPSIT/tree/main/chatroom/client%20testuale) per connettersi al server specificando l'indirizzo IP del server e la porta su cui il server è in ascolto (in questo caso, 127.0.0.1 e 3000).
 - Inviare i messaggi al server inserendo un nome, seguito da una doppia barra e il messaggio desiderato, ad esempio: **Nome:Ciao a tutti**.
 - I messaggi inviati verranno visualizzati da tutti i client connessi, insieme al nome del mittente e all'ora in cui sono stati inviati.
-- Per disconnetterti, chiudi il client o digita il comando **exit**.
+- Per disconnettersi, chiudere il client o digitare il comando **exit**.
 
 
 ## Funzionamento
 
-Il server ascolta le richieste di connessione su una determinata porta e quando viene stabilita una connessione, crea un nuovo oggetto `ChatClient `per gestire il client connesso. Quando il client invia un messaggio, questo viene distribuito a tutti gli altri client connessi al server.
+Il server ascolta le richieste di connessione su una determinata porta e quando viene stabilita una connessione, crea un nuovo oggetto `ChatClient` per gestire il client connesso. Quando il client invia un messaggio, questo viene distribuito a tutti gli altri client connessi al server.
 
 
 ## Codice significativo
