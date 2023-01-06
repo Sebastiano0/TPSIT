@@ -55,6 +55,12 @@ Altro codice significativo è quello della classe `Connection`.
 
 Il modo per effetturare una connessione è medesimo a quello del **client testuale**, quindi la speigazione di tale classe si puà trovare [qui](https://github.com/Sebastiano0/TPSIT/tree/main/chatroom/client%20testuale)
 
+## UI
+
+![Login](https://github.com/Sebastiano0/TPSIT/blob/main/chatroom/client_mobile/assets/Login_Image.png)
+
+![Login](https://github.com/Sebastiano0/TPSIT/blob/main/chatroom/client_mobile/assets/Chat_Image.png)
+
 ## Riferimenti
 
 [Connessione](https://gitlab.com/divino.marchese/zuccante_src/-/blob/master/dart/netowrking_io/es006_chatroom_client.dart)
