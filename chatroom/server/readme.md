@@ -15,7 +15,7 @@ Per utilizzare l'applicazione, segui questi passaggi:
 
 ## Funzionamento
 
-Il server ascolta le richieste di connessione su una determinata porta e quando viene stabilita una connessione, crea un nuovo oggetto `ChatClient `per gestire il client connesso. Quando il client invia un messaggio, questo viene distribuito a tutti gli altri client connessi al server.
+Il server ascolta le richieste di connessione su una determinata porta e quando viene stabilita una connessione, crea un nuovo oggetto `ChatClient` per gestire il client connesso. Quando il client invia un messaggio, questo viene distribuito a tutti gli altri client connessi al server.
 
 
 ## Codice significativo
