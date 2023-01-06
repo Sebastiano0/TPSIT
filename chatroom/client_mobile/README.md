@@ -11,6 +11,8 @@ Risultano significative le seguenti scelte implementative:
 
 ## Codice significativo
 
+### Invio messaggi
+
 ```dart
 void _sendMessage() {
   String message = _textController.text;
