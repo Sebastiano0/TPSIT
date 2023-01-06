@@ -27,8 +27,8 @@ class ChatMessage extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: sender == AppData.username
-                    ? Colors.purple[700]
-                    : Colors.deepPurple[300],
+                    ? Colors.lightBlue[800]
+                    : Colors.cyan[600],
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Column(
@@ -43,8 +43,8 @@ class ChatMessage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
                       color: sender == AppData.username
-                          ? Colors.purple[700]
-                          : Colors.deepPurple[300],
+                          ? Colors.lightBlue[800]
+                          : Colors.cyan[600],
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Text(text),
