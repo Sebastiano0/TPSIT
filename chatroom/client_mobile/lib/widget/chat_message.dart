@@ -15,56 +15,55 @@ class ChatMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 2),
-      child: Row(
-        mainAxisAlignment: sender == AppData.username
-            ? MainAxisAlignment.end
-            : MainAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: sender == AppData.username
-                  ? Colors.green[100]
-                  : Colors.grey[300],
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(sender,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 158, 158, 158),
-                    )),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  decoration: BoxDecoration(
-                    color: sender == AppData.username
-                        ? Colors.green[100]
-                        : Colors.grey[300],
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Flexible(
-                    child: Text(
-                      text,
-                      maxLines: null,
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: true,
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 2),
+        child: Row(
+          mainAxisAlignment: sender == AppData.username
+              ? MainAxisAlignment.end
+              : MainAxisAlignment.start,
+          children: [
+            Flexible(
+              child: Container(
+                constraints: const BoxConstraints(maxWidth: 200),
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: sender == AppData.username
+                      ? Colors.green[100]
+                      : Colors.grey[300],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(sender,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 158, 158, 158),
+                        )),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                        color: sender == AppData.username
+                            ? Colors.green[100]
+                            : Colors.grey[300],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(text),
                     ),
-                  ),
+                    Text(
+                      timeStamp,
+                      style: const TextStyle(
+                        fontSize: 10,
+                        color: Color.fromARGB(255, 158, 158, 158),
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  timeStamp,
-                  style: const TextStyle(
-                    fontSize: 10,
-                    color: Color.fromARGB(255, 158, 158, 158),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
