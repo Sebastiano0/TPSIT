@@ -21,8 +21,11 @@ void main() {
     String message = String.fromCharCodes(data).trim();
     if (message.length > 126) {
       print("Il messaggio è troppo lungo per essere inviato al server.");
+    } else if (message.replaceAll(' ', '') == "") {
+      print("Il messaggio deve contenere del testo!");
+    } else {
+      socket.write(name! + ": " + message + '\n');
     }
-    socket.write(name! + ": " + message + '\n');
   });
 }
 

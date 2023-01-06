@@ -1,5 +1,4 @@
 import 'dart:io';
-
 // USE ALSO netcat 127.0.0.1 3000
 
 // global variables
@@ -52,7 +51,7 @@ class ChatClient {
   }
 
   void messageHandler(data) async {
-    String message = new String.fromCharCodes(data).trim();
+    String message = String.fromCharCodes(data).trim();
     String name = message.split(":")[0];
     String messageContent = message.substring(message.indexOf(":") + 1);
     String time = getTime();
