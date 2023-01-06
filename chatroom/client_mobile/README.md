@@ -11,6 +11,8 @@ Risultano significative le seguenti scelte implementative:
 
 ## Codice significativo
 
+### Invio messaggi
+
 ```dart
 void _sendMessage() {
   String message = _textController.text;
@@ -43,9 +45,19 @@ In caso contrario, il messaggio viene aggiunto alla lista dei messaggi e inviato
 Infine, il campo di testo viene pulito e la lista viene fatta scorrere fino all'ultimo messaggio.
 
 
+### Flexible
+
+Viene usato il widget **Flexible** per avere la possibilità di mostrare il testo del messaggio su più righe.
+
+### Connessione al server
+
 Altro codice significativo è quello della classe `Connection`.
 
 Il modo per effetturare una connessione è medesimo a quello del **client testuale**, quindi la speigazione di tale classe si puà trovare [qui](https://github.com/Sebastiano0/TPSIT/tree/main/chatroom/client%20testuale)
+
+## UI
+
+![Login](https://github.com/Sebastiano0/TPSIT/blob/main/chatroom/client_mobile/assets/Login_Image.png)![Chat](https://github.com/Sebastiano0/TPSIT/blob/main/chatroom/client_mobile/assets/Chat_image.png)
 
 ## Riferimenti
 
