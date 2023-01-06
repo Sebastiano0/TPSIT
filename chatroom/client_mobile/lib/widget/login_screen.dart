@@ -49,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      'Benvenuto in Chat App',
+                      'Benvenuto nella chatroom',
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,

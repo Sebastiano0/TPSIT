@@ -68,7 +68,7 @@ class _ChatScreenState extends State<ChatScreen> {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           title: const Text(
-            "Chat",
+            "Chatroom",
             style: TextStyle(
               fontSize: 24.0,
               fontWeight: FontWeight.w600,
