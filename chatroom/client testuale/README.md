@@ -40,7 +40,7 @@ stdin.listen((data) {
 });
 ```
 
-In particolare questo metodo ascolta l'input degli utenti (a riga di comando) con la classe stdin, una volta convertito l'input a stringa e dopo aver fatto i controlli sulla lunghezza invia il messaggio al server attraverso il socket 
+In particolare questo metodo ascolta l'input degli utenti (a riga di comando) con la classe `Stdin`, una volta convertito l'input a stringa e dopo aver fatto i controlli sulla lunghezza invia il messaggio al server attraverso il socket 
 
 ## Riferimetni
 [Codice](https://gitlab.com/divino.marchese/zuccante_src/-/blob/master/dart/netowrking_io/es006_chatroom_client.dart)
