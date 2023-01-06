@@ -31,8 +31,7 @@ class ChatClient {
     _socket.listen(messageHandler,
         onError: errorHandler, onDone: finishedHandler);
   }
-
-...
+  ...
 }
 ```
 La classe `ChatClient` rappresenta un client connesso al server e gestisce le operazioni di invio e ricezione dei messaggi. Contiene i metodi **messageHandler**, **errorHandler** e **finishedHandler** per gestire rispettivamente i messaggi ricevuti dal client, gli errori e la disconnessione del client.
