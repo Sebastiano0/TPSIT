@@ -1,7 +1,6 @@
 # Server chatroom
 
-L'applicazione permette a più utenti di connettersi al server tramite una socket e di inviare e ricevere messaggi in tempo reale.
-
+Un server tcp in dart che consente a più utenti di connettersi tramite un socket e di inviare e ricevere messaggi in tempo reale.
 
 ## Come usare
 
@@ -17,12 +16,36 @@ Per utilizzare l'applicazione, segui questi passaggi:
 
 Il server ascolta le richieste di connessione su una determinata porta e quando viene stabilita una connessione, crea un nuovo oggetto `ChatClient` per gestire il client connesso. Quando il client invia un messaggio, questo viene distribuito a tutti gli altri client connessi al server.
 
-
 ## Codice significativo
 
 Il codice significativo dell'applicazione include la classe `ChatClient` e la funzione `distributeMessage`.
 
+```dart
+class ChatClient {
+  late Socket _socket;
+  String get _address => _socket.remoteAddress.address;
+  int get _port => _socket.remotePort;
+
+  ChatClient(Socket s) {
+    _socket = s;
+    _socket.listen(messageHandler,
+        onError: errorHandler, onDone: finishedHandler);
+  }
+
+...
+}
+```
 La classe `ChatClient` rappresenta un client connesso al server e gestisce le operazioni di invio e ricezione dei messaggi. Contiene i metodi **messageHandler**, **errorHandler** e **finishedHandler** per gestire rispettivamente i messaggi ricevuti dal client, gli errori e la disconnessione del client.
+
+```dart
+void distributeMessage(ChatClient client, String message) {
+  for (ChatClient c in clients) {
+    if (c != client) {
+      c.write(message + "\n");
+    }
+  }
+}
+```
 
 La funzione `distributeMessage` viene chiamata quando un client invia un messaggio al server. Prende in input il client mittente e il messaggio e lo invia a tutti gli altri client connessi, tranne il mittente.
 
