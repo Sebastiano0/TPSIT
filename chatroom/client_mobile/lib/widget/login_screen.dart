@@ -21,10 +21,8 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         _isLoading = true;
       });
-      // Simula il login asincrono
       await Future.delayed(const Duration(seconds: 1));
       // Salva l'username nei dati dell'applicazione
-      // (in questo esempio, utilizzo una semplice variabile statica)
       AppData.username = _usernameController.text;
       connection.createConnection();
       Navigator.of(context).pushReplacement(
@@ -38,9 +36,10 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: _isLoading
           ? const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(color: Colors.indigo),
             )
           : Padding(
               padding: const EdgeInsets.all(16.0),
@@ -49,24 +48,26 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       'Benvenuto in Chat App',
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
-                        color: Colors.indigo[800],
+                        color: Colors.white,
                       ),
                     ),
                     const SizedBox(height: 16),
                     TextFormField(
                       controller: _usernameController,
-                      decoration: InputDecoration(
+                      style: const TextStyle(color: Colors.white),
+                      decoration: const InputDecoration(
                         labelText: 'Username',
                         hintText: 'Inserisci il tuo username',
-                        hintStyle: TextStyle(color: Colors.indigo[800]),
-                        labelStyle: TextStyle(color: Colors.indigo[800]),
-                        focusedBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.indigo),
+                        hintStyle: TextStyle(color: Colors.white),
+                        labelStyle: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
                         ),
                       ),
                       validator: (value) {
@@ -79,9 +80,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: _login,
-                      child: const Text("Accedi"),
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.indigo[800]),
+                          backgroundColor: Colors.indigo),
+                      child: const Text("Accedi"),
                     ),
                   ],
                 ),

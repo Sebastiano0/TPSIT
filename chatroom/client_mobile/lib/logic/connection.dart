@@ -46,23 +46,17 @@ class Connection {
   }
 
   String getTimestamp(String input) {
-    // Scomponi la stringa in una lista di parole separando gli spazi
     List<String> words = input.split(' ');
-    // Restituisci la prima parola (che rappresenta il timestamp)
     return '${words[0]} ${words[1]}';
   }
 
   String getSender(String input) {
-    // Scomponi la stringa in una lista di parole separando gli spazi
     List<String> words = input.split(' ');
-    // Restituisci la quarta parola (che rappresenta il mittente)
     return words[4];
   }
 
   String getMessage(String input) {
-    // Scomponi la stringa in una lista di parole separando gli spazi
     String words = input.substring(input.indexOf(">") + 1);
-    // Restituisci l'ultima parola (che rappresenta il messaggio)
     return words;
   }
 }

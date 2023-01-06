@@ -49,12 +49,10 @@ class _ChatScreenState extends State<ChatScreen> {
       setState(() {});
       return;
     }
-    // Aggiungi il nuovo messaggio alla lista
     setState(() {
       MessagesList.messages.add(Message(
           DateTime.now().toString().split('.')[0], AppData.username, message));
     });
-    // Invia il messaggio al server tramite la connessione
     connection.sendMessage(message);
     // Pulisci il campo di testo
     _textController.clear();
@@ -67,81 +65,89 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Chat",
-          style: TextStyle(
-            fontSize: 24.0,
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          title: const Text(
+            "Chat",
+            style: TextStyle(
+              fontSize: 24.0,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
           ),
+          elevation: 0.0,
+          backgroundColor: Colors.indigo[800],
         ),
-        elevation: 0.0,
-        backgroundColor: Colors.indigo[800],
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              controller: _scrollController,
-              itemCount: MessagesList.messages.length,
-              itemBuilder: (context, index) {
-                return ChatMessage(
-                  sender: MessagesList.messages[index].sender,
-                  text: MessagesList.messages[index].text,
-                  timeStamp: MessagesList.messages[index].timestamp,
-                );
-              },
+        body: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/background_chat.jpg'),
+              fit: BoxFit.cover,
             ),
           ),
-          Container(
-            margin: const EdgeInsets.only(top: 8.0),
-            child: Row(
-              children: [
-                Flexible(
-                  child: TextField(
-                    controller: _textController,
-                    onTap: () {
-                      Timer(const Duration(milliseconds: 500), () {
-                        _scrollController
-                            .jumpTo(_scrollController.position.maxScrollExtent);
-                      });
-                    },
-                    decoration: InputDecoration(
-                      hintText: "Invia un messaggio",
-                      hintStyle: TextStyle(
-                        fontSize: 16.0,
-                        color: Colors.grey[400],
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  controller: _scrollController,
+                  itemCount: MessagesList.messages.length,
+                  itemBuilder: (context, index) {
+                    return ChatMessage(
+                      sender: MessagesList.messages[index].sender,
+                      text: MessagesList.messages[index].text,
+                      timeStamp: MessagesList.messages[index].timestamp,
+                    );
+                  },
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 8.0),
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: TextField(
+                        controller: _textController,
+                        onTap: () {
+                          Timer(const Duration(milliseconds: 500), () {
+                            _scrollController.jumpTo(
+                                _scrollController.position.maxScrollExtent);
+                          });
+                        },
+                        decoration: InputDecoration(
+                          hintText: "Invia un messaggio",
+                          hintStyle: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.grey[400],
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                            borderSide: BorderSide.none,
+                          ),
+                          filled: true,
+                          fillColor: Colors.grey[200],
+                        ),
                       ),
-                      border: OutlineInputBorder(
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.indigo[800],
                         borderRadius: BorderRadius.circular(30.0),
-                        borderSide: BorderSide.none,
                       ),
-                      filled: true,
-                      fillColor: Colors.grey[200],
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.send,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          _sendMessage();
+                        },
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.indigo[800],
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.send,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      _sendMessage();
-                    },
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
-    );
+        ));
   }
 }
