@@ -101,6 +101,12 @@ class _ChatScreenState extends State<ChatScreen> {
                 Flexible(
                   child: TextField(
                     controller: _textController,
+                    onTap: () {
+                      Timer(const Duration(milliseconds: 500), () {
+                        _scrollController
+                            .jumpTo(_scrollController.position.maxScrollExtent);
+                      });
+                    },
                     decoration: InputDecoration(
                       hintText: "Invia un messaggio",
                       hintStyle: TextStyle(
@@ -122,7 +128,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                   child: IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.send,
                       color: Colors.white,
                     ),
