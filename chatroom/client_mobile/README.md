@@ -59,7 +59,7 @@ Il modo per effetturare una connessione è medesimo a quello del **client testua
 
 ![Login](https://github.com/Sebastiano0/TPSIT/blob/main/chatroom/client_mobile/assets/Login_Image.png)
 
-![Login](https://github.com/Sebastiano0/TPSIT/blob/main/chatroom/client_mobile/assets/Chat_Image.png)
+![Chat](https://github.com/Sebastiano0/TPSIT/blob/main/chatroom/client_mobile/assets/Chat_image.png)
 
 ## Riferimenti
 
