@@ -1,6 +1,6 @@
 # Chatroom Client Testuale
 
-Questa è un **client** di una chatroom che consente agli utenti di connettersi a un [server locale](https://github.com/Sebastiano0/TPSIT/tree/main/chatroom/server) per inviare e ricevere messaggi di testo.
+Questa è un **client** tcp di una chatroom che consente agli utenti di connettersi a un [server locale](https://github.com/Sebastiano0/TPSIT/tree/main/chatroom/server) per inviare e ricevere messaggi di testo.
 
 
 ## Come usare
@@ -24,6 +24,23 @@ Se si verifica un errore durante la connessione o il trasferimento dei dati, vie
 ## Commenti sul codice
 La funzione `main()` chiede all'utente di inserire un nome per la connessione e poi si connette al server utilizzando il metodo `Socket.connect()`. Una volta stabilita la connessione, viene impostato il valore di socket e viene impostato un ascoltatore su di esso per gestire i dati in arrivo, gli errori e la chiusura della connessione.
 
+### Ascolto input utente
+
+Il codice di seguito gestisce l'invio di messaggi attraverso un socket.
+```dart
+stdin.listen((data) {
+  String message = String.fromCharCodes(data).trim();
+  if (message.length > 126) {
+    print("Il messaggio è troppo lungo per essere inviato al server.");
+  } else if (message.replaceAll(' ', '') == "") {
+    print("Il messaggio deve contenere del testo!");
+  } else {
+    socket.write(name! + ": " + message + '\n');
+  }
+});
+```
+
+In particolare questo metodo ascolta l'input degli utenti (a riga di comando) con la classe stdin, una volta convertito l'input a stringa e dopo aver fatto i controlli sulla lunghezza invia il messaggio al server attraverso il socket 
 
 ## Riferimetni
 [Codice](https://gitlab.com/divino.marchese/zuccante_src/-/blob/master/dart/netowrking_io/es006_chatroom_client.dart)
