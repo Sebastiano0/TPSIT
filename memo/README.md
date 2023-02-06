@@ -40,7 +40,7 @@ oppure all'interno del widget `MyHomePage` dove, nei vari metodi per gestire le 
 
 La centralizzazione dello sato poteva avvenire in diverse maniere grazie ai vari *patter* che ci vengono in aiuto. Ho deciso di usare il pattern del *provider* perchè oltre a essere risultato il più facile da applicare, è quello con cui si riesce ad avere una più chiara visione del codice grazie alla sua non complicata implementazione
 
-##Riferimenti
+## Riferimenti
 
 [Applicazione preimpostata](https://gitlab.com/divino.marchese/flutter/-/tree/master/am032_todo_list)
 
