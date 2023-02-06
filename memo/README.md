@@ -10,7 +10,7 @@ La classe principale dell'applicazione è `MyApp`, che utilizza `ChangeNotifierP
 
 La classe `TodoProvider` estende `ChangeNotifier` e contiene la logica per gestire l'elenco di to-do. Troviamo i metodi per aggiungere, modificare e eliminare gli elementi dall'elenco, e notifica i widget interessati quando lo stato cambia.
 
-##Codice significativo
+## Codice significativo
 
 Come detto in precedenza il codice significativo si può trovare nella classe `TodoProvider`, dove grazie andiamo ad agire sulla logica (mostrato metodo per aggiungere) e andiamo a notificare tutti i widget in ascolto del cambiamento
 ```dart
