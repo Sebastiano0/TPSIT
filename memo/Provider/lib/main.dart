@@ -37,7 +37,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _textFieldController = TextEditingController();
-  final List<Todo> _todos = <Todo>[];
+  //final List<Todo> _todos = <Todo>[];
 
   void _handleTodoChange(Todo todo) {
     Provider.of<TodoProvider>(context, listen: false).toggleTodo(todo);
