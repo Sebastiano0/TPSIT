@@ -1,3 +1,6 @@
+import 'package:provider/provider.dart';
+
+import '../trip_stop_provider.dart';
 import 'trip_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -6,13 +9,9 @@ import '../database/dao.dart';
 import '../database/model.dart';
 
 class PickerDemo extends StatefulWidget {
-  final TripDao tripDao;
-  final StopDao stopDao;
-  final TripStopDao tripStopDao;
   final Trip trip;
 
-  PickerDemo(this.tripDao, this.stopDao, this.tripStopDao, this.trip,
-      {Key? key});
+  PickerDemo(this.trip, {Key? key});
 
   @override
   State<StatefulWidget> createState() => PickerDemoState();
@@ -27,15 +26,15 @@ class PickerDemoState extends State<PickerDemo> {
   String googleAPiKey = "AIzaSyBxI-We0hHKqKhaV1JZZxYrC6gOX8_qJjA";
   Map<PolylineId, Polyline> polylines = {};
   List<LatLng> polylineCoordinates = [];
+  late TripStopProvider tripStopProvider;
 
   @override
   void initState() {
     super.initState();
-    _loadPoints();
   }
 
   Future<void> _loadPoints() async {
-    List<Stop> stops = await widget.stopDao.getStopsByTripId(widget.trip.id!);
+    List<Stop> stops = await tripStopProvider.getStopsByTripId(widget.trip.id!);
     for (int i = 0; i < stops.length; i++) {
       markers.add(Marker(
         markerId: MarkerId(i.toString()),
@@ -102,6 +101,8 @@ class PickerDemoState extends State<PickerDemo> {
 
   @override
   Widget build(BuildContext context) {
+    tripStopProvider = Provider.of<TripStopProvider>(context, listen: false);
+    _loadPoints();
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.trip.name),
@@ -112,9 +113,7 @@ class PickerDemoState extends State<PickerDemo> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => TripPage(
-                        widget.tripDao, widget.stopDao, widget.tripStopDao,
-                        trip: widget.trip)),
+                    builder: (context) => TripPage(trip: widget.trip)),
               );
             },
           ),

@@ -1,3 +1,6 @@
+import 'package:provider/provider.dart';
+
+import '../trip_stop_provider.dart';
 import 'maps.dart';
 import 'package:flutter/material.dart';
 import '../database/dao.dart';
@@ -6,11 +9,7 @@ import '../database/widgets.dart';
 import 'trip_page.dart';
 
 class HomePage extends StatefulWidget {
-  final TripDao tripDao;
-  final StopDao stopDao;
-  final TripStopDao tripStopDao;
-
-  HomePage(this.tripDao, this.stopDao, this.tripStopDao, {Key? key});
+  HomePage({Key? key});
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -19,16 +18,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final TextEditingController _textFieldController = TextEditingController();
   final List<Trip> _trips = <Trip>[];
-
+  late TripStopProvider tripStopProvider;
   @override
   void initState() {
-    setState(() {});
     super.initState();
-    _updateTrips();
   }
 
   _updateTrips() async {
-    final trips = await widget.tripDao.getAllTrips();
+    final trips = await tripStopProvider.getAllTrips();
     setState(() {
       _trips.clear();
       _trips.addAll(trips);
@@ -38,31 +35,26 @@ class _HomePageState extends State<HomePage> {
   void _handleTripView(Trip trip) {
     Navigator.push(
       context,
-      MaterialPageRoute(
-          builder: (context) => PickerDemo(
-              widget.tripDao, widget.stopDao, widget.tripStopDao, trip)),
+      MaterialPageRoute(builder: (context) => PickerDemo(trip)),
     );
   }
 
   void _handleTripEdit(Trip trip) {
     Navigator.push(
       context,
-      MaterialPageRoute(
-          builder: (context) => TripPage(
-              widget.tripDao, widget.stopDao, widget.tripStopDao,
-              trip: trip)),
+      MaterialPageRoute(builder: (context) => TripPage(trip: trip)),
     );
   }
 
   void _handleTripDelete(Trip trip) async {
     // cancello tripstops del trip
-    final tripStops = await widget.tripStopDao.getTripStopsByTripId(trip.id!);
+    final tripStops = await tripStopProvider.getTripStopsByTripId(trip.id!);
     for (final ts in tripStops) {
-      await widget.tripStopDao.deleteTripStop(ts);
-      await widget.stopDao.deleteStopById(ts.stopId);
+      await tripStopProvider.deleteTripStop(ts);
+      await tripStopProvider.deleteStopById(ts.stopId);
     }
     // cancello trip
-    await widget.tripDao.deleteTrip(trip);
+    await tripStopProvider.deleteTrip(trip);
     setState(() {
       _trips.remove(trip);
     });
@@ -70,7 +62,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildStopList(int tripId) {
     return FutureBuilder(
-      future: widget.tripStopDao.getStopsByTripId(tripId),
+      future: tripStopProvider.getStopsByTripId(tripId),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           List<Stop> stops = snapshot.data as List<Stop>;
@@ -96,6 +88,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    tripStopProvider = Provider.of<TripStopProvider>(context, listen: false);
+    _updateTrips();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Journey"),
@@ -132,9 +127,7 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (context) => TripPage(
-                    widget.tripDao, widget.stopDao, widget.tripStopDao)),
+            MaterialPageRoute(builder: (context) => TripPage()),
           );
         },
         tooltip: 'Add Item',

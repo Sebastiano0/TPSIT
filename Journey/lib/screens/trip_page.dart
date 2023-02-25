@@ -1,4 +1,7 @@
+import 'package:provider/provider.dart';
+
 import '../database/dao.dart';
+import '../trip_stop_provider.dart';
 import 'homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:place_picker/place_picker.dart';
@@ -7,17 +10,11 @@ import '../database/model.dart';
 import '../main.dart';
 
 class TripPage extends StatefulWidget {
-  final TripDao tripDao;
-  final StopDao stopDao;
-  final TripStopDao tripStopDao;
-  final Trip? trip; // aggiungiamo il parametro opzionale trip
+  final Trip? trip;
 
-  const TripPage(
-    this.tripDao,
-    this.stopDao,
-    this.tripStopDao, {
+  const TripPage({
     Key? key,
-    this.trip, // specifica che il parametro è opzionale
+    this.trip,
   });
 
   @override
@@ -26,6 +23,8 @@ class TripPage extends StatefulWidget {
 
 class _TripPageState extends State<TripPage> {
   final List<Stop> _stopsId = [];
+  late TripStopProvider tripStopProvider =
+      Provider.of<TripStopProvider>(context, listen: false);
 
   bool _tripNameEntered = false;
   final _tripNameController = TextEditingController();
@@ -43,7 +42,7 @@ class _TripPageState extends State<TripPage> {
       // Popola i campi con i dati del viaggio passato come parametro
       _tripNameEntered = true;
       _tripNameController.text = widget.trip!.name;
-      widget.tripStopDao.getStopsByTripId(widget.trip!.id!).then((stops) {
+      tripStopProvider.getStopsByTripId(widget.trip!.id!).then((stops) {
         setState(() {
           _stopsId.addAll(stops);
         });
@@ -157,12 +156,11 @@ class _TripPageState extends State<TripPage> {
                     TextButton(
                       child: Text("OK"),
                       onPressed: () async {
-                        
                         setState(() {
-                          _stopsId[tempIndex].info = _textEditingController.text;
-
+                          _stopsId[tempIndex].info =
+                              _textEditingController.text;
                         });
-                        await widget.stopDao.updateStop(_stopsId[index]);
+                        await tripStopProvider.updateStop(_stopsId[index]);
                         Navigator.of(context).pop();
                       },
                     ),
@@ -209,25 +207,25 @@ class _TripPageState extends State<TripPage> {
           name: _tripNameController.text,
           lastUpdate: DateTime.now().toString(),
         );
-        await widget.tripDao.insertTrip(trip);
-        int? tripId = await widget.tripDao.getLastTrip();
+        await tripStopProvider.insertTrip(trip);
+        int? tripId = await tripStopProvider.getLastTrip();
         for (var i = 0; i < _stopsId.length; i++) {
           final stop = _stopsId[i];
-          final stopId = await widget.stopDao.insertStop(stop);
+          final stopId = await tripStopProvider.insertStop(stop);
           final tripStop = TripStop(
             null,
             tripId: tripId!,
             stopId: stop.id!,
           );
-          await widget.tripStopDao.insertTripStop(tripStop);
+          await tripStopProvider.insertTripStop(tripStop);
         }
       } else {
         currentTrip.name = _tripNameController.text;
         currentTrip.lastUpdate = DateTime.now().toString();
-        await widget.tripDao.updateTrip(currentTrip);
+        await tripStopProvider.updateTrip(currentTrip);
 
         final tripStops =
-            await widget.tripStopDao.getTripStopsByTripId(currentTrip.id!);
+            await tripStopProvider.getTripStopsByTripId(currentTrip.id!);
         final stopIds = _stopsId.map((stop) => stop.id).toSet();
         final tripStopIds = tripStops.map((tripStop) => tripStop.id).toSet();
         final stopsToAdd = stopIds
@@ -248,17 +246,15 @@ class _TripPageState extends State<TripPage> {
             tripId: currentTrip.id!,
             stopId: stopId!,
           );
-          await widget.tripStopDao.insertTripStop(tripStop);
+          await tripStopProvider.insertTripStop(tripStop);
         }
         for (var tripStopId in stopsToRemove) {
-          await widget.tripStopDao.deleteTripStopById(tripStopId!);
+          await tripStopProvider.deleteTripStopById(tripStopId!);
         }
       }
       Navigator.push(
         context,
-        MaterialPageRoute(
-            builder: (context) =>
-                HomePage(widget.tripDao, widget.stopDao, widget.tripStopDao)),
+        MaterialPageRoute(builder: (context) => HomePage()),
       );
     } else {
       showDialog(
@@ -284,8 +280,8 @@ class _TripPageState extends State<TripPage> {
         builder: (context) =>
             PlacePicker("AIzaSyBxI-We0hHKqKhaV1JZZxYrC6gOX8_qJjA")));
 
-    var existingStop = await widget.stopDao
-        .getStopByLatLng(result.latLng!.latitude, result.latLng!.longitude);
+    var existingStop = await tripStopProvider.getStopByLatLng(
+        result.latLng!.latitude, result.latLng!.longitude);
 
     if (existingStop == null) {
       var newStop = Stop(
@@ -295,8 +291,8 @@ class _TripPageState extends State<TripPage> {
         name: result.name!,
         info: null,
       );
-      await widget.stopDao.insertStop(newStop);
-      newStop.id = await widget.stopDao.getLastStop();
+      await tripStopProvider.insertStop(newStop);
+      newStop.id = await tripStopProvider.getLastStop();
       setState(() {
         _stopsId.add(newStop);
         _stopsId.sort((a, b) => _stopsId.indexOf(a) - _stopsId.indexOf(b));
