@@ -1,5 +1,6 @@
 import 'package:provider/provider.dart';
 
+import '../logic/icon_weather.dart';
 import '../trip_stop_provider.dart';
 import 'maps.dart';
 import 'package:flutter/material.dart';
@@ -18,10 +19,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final TextEditingController _textFieldController = TextEditingController();
   final List<Trip> _trips = <Trip>[];
-  late TripStopProvider tripStopProvider;
+  late TripStopProvider tripStopProvider =
+      Provider.of<TripStopProvider>(context, listen: false);
   @override
   void initState() {
     super.initState();
+    _updateTrips();
   }
 
   _updateTrips() async {
@@ -36,14 +39,14 @@ class _HomePageState extends State<HomePage> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => PickerDemo(trip)),
-    );
+    ).then((value) => _updateTrips());
   }
 
   void _handleTripEdit(Trip trip) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => TripPage(trip: trip)),
-    );
+    ).then((value) => _updateTrips());
   }
 
   void _handleTripDelete(Trip trip) async {
@@ -51,7 +54,6 @@ class _HomePageState extends State<HomePage> {
     final tripStops = await tripStopProvider.getTripStopsByTripId(trip.id!);
     for (final ts in tripStops) {
       await tripStopProvider.deleteTripStop(ts);
-      await tripStopProvider.deleteStopById(ts.stopId);
     }
     // cancello trip
     await tripStopProvider.deleteTrip(trip);
@@ -69,12 +71,55 @@ class _HomePageState extends State<HomePage> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               ListView.builder(
                 shrinkWrap: true,
                 itemCount: stops.length,
                 itemBuilder: (context, index) {
-                  return Text("- ${stops[index].name}");
+                  return Row(
+                    children: [
+                      FutureBuilder(
+                        future: WeatherIcon.getStopWeather(
+                            stops[index].latitude, stops[index].longitude),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
+                            if (snapshot.hasError) {
+                              return Center(
+                                child: Text('Error: ${snapshot.error}'),
+                              );
+                            }
+
+                            String? iconUrl = snapshot.data!
+                                .substring(0, snapshot.data!.indexOf(":"));
+                            double temp = 280.15 -
+                                double.parse(snapshot.data!.substring(
+                                    snapshot.data!.indexOf(":") + 1));
+
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 8),
+                              child: Row(
+                                children: [
+                                  iconUrl != null
+                                      ? Image.network(
+                                          "http://openweathermap.org/img/wn/$iconUrl@2x.png",
+                                          height: 24)
+                                      : Container(),
+                                  const SizedBox(width: 8),
+                                  Text(
+                                    '${temp.toStringAsFixed(1)}°C',
+                                  ),
+                                ],
+                              ),
+                            );
+                          } else {
+                            return Container();
+                          }
+                        },
+                      ),
+                      Text("- ${stops[index].name}"),
+                    ],
+                  );
                 },
               ),
             ],
@@ -89,8 +134,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     tripStopProvider = Provider.of<TripStopProvider>(context, listen: false);
-    _updateTrips();
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("Journey"),
@@ -108,11 +151,11 @@ class _HomePageState extends State<HomePage> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
-                      icon: Icon(Icons.delete),
+                      icon: const Icon(Icons.delete),
                       onPressed: () => _handleTripDelete(_trips[index]),
                     ),
                     IconButton(
-                      icon: Icon(Icons.edit),
+                      icon: const Icon(Icons.edit),
                       onPressed: () => _handleTripEdit(_trips[index]),
                     ),
                   ],
@@ -127,8 +170,8 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => TripPage()),
-          );
+            MaterialPageRoute(builder: (context) => const TripPage()),
+          ).then((value) => _updateTrips());
         },
         tooltip: 'Add Item',
         child: const Icon(Icons.add),

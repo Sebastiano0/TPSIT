@@ -5,7 +5,6 @@ import 'trip_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../database/dao.dart';
 import '../database/model.dart';
 
 class PickerDemo extends StatefulWidget {
@@ -21,7 +20,7 @@ class PickerDemoState extends State<PickerDemo> {
   late GoogleMapController controller;
   // List<Polyline> polylines = [];
   List<LatLng> points = [];
-  Set<Marker> markers = Set(); //markers for google map
+  Set<Marker> markers = {}; //markers for google map
   PolylinePoints polylinePoints = PolylinePoints();
   String googleAPiKey = "AIzaSyBxI-We0hHKqKhaV1JZZxYrC6gOX8_qJjA";
   Map<PolylineId, Polyline> polylines = {};
@@ -31,6 +30,13 @@ class PickerDemoState extends State<PickerDemo> {
   @override
   void initState() {
     super.initState();
+    tripStopProvider = Provider.of<TripStopProvider>(context, listen: false);
+    _loadPoints();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   Future<void> _loadPoints() async {
@@ -71,11 +77,11 @@ class PickerDemoState extends State<PickerDemo> {
     );
 
     if (result.points.isNotEmpty) {
-      result.points.forEach((PointLatLng point) {
+      for (var point in result.points) {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-      });
+      }
     } else {
-      print(result.errorMessage);
+      debugPrint(result.errorMessage);
     }
     addPolyLine(polylineCoordinates, polylineIdVal);
   }
@@ -86,10 +92,12 @@ class PickerDemoState extends State<PickerDemo> {
       polylineId: id,
       color: const Color.fromARGB(255, 116, 167, 255),
       points: polylineCoordinates,
-      width: 8,
+      width: 5,
     );
     polylines[id] = polyline;
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   void _onMapCreated(GoogleMapController c) {
@@ -102,7 +110,7 @@ class PickerDemoState extends State<PickerDemo> {
   @override
   Widget build(BuildContext context) {
     tripStopProvider = Provider.of<TripStopProvider>(context, listen: false);
-    _loadPoints();
+    // _loadPoints();
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.trip.name),

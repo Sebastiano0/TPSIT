@@ -1,6 +1,6 @@
-import 'package:am023_todo_list_floor/database/dao.dart';
-import 'package:am023_todo_list_floor/database/database.dart';
-import 'package:am023_todo_list_floor/database/model.dart';
+import '../database/dao.dart';
+import '../database/database.dart';
+import '../database/model.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -105,7 +105,7 @@ class TripStopProvider extends ChangeNotifier {
   }
 
   Future<int?> deleteTripStopById(int id) async {
-    int c = _tripStopDao.deleteTripStopById(id) as int;
+    var c = _tripStopDao.deleteTripStopById(id);
     notifyListeners();
     return c;
   }

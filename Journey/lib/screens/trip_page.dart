@@ -1,13 +1,9 @@
 import 'package:provider/provider.dart';
-
-import '../database/dao.dart';
-import '../trip_stop_provider.dart';
-import 'homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:place_picker/place_picker.dart';
 
+import '../trip_stop_provider.dart';
 import '../database/model.dart';
-import '../main.dart';
 
 class TripPage extends StatefulWidget {
   final Trip? trip;
@@ -106,10 +102,10 @@ class _TripPageState extends State<TripPage> {
               }
             : null,
         backgroundColor: _tripNameEntered ? null : Colors.grey,
-        child: Container(
+        child: const SizedBox(
           width: 40.0,
           height: 40.0,
-          child: const Center(
+          child: Center(
             child: Text(
               "Add stop",
               textAlign: TextAlign.center,
@@ -252,10 +248,7 @@ class _TripPageState extends State<TripPage> {
           await tripStopProvider.deleteTripStopById(tripStopId!);
         }
       }
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
-      );
+      Navigator.pop(context);
     } else {
       showDialog(
         context: context,
