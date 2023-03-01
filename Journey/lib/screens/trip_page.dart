@@ -212,6 +212,7 @@ class _TripPageState extends State<TripPage> {
             null,
             tripId: tripId!,
             stopId: stop.id!,
+            position: i,
           );
           await tripStopProvider.insertTripStop(tripStop);
         }
@@ -235,12 +236,14 @@ class _TripPageState extends State<TripPage> {
             })
             .where((id) => id != null)
             .toSet());
-
-        for (var stopId in stopsToAdd) {
+        for (var i = 0; i < _stopsId.length; i++) {
+          final stop = _stopsId[i];
+          final stopId = await tripStopProvider.insertStop(stop);
           final tripStop = TripStop(
             null,
             tripId: currentTrip.id!,
-            stopId: stopId!,
+            stopId: stop.id!,
+            position: i,
           );
           await tripStopProvider.insertTripStop(tripStop);
         }

@@ -52,7 +52,7 @@ class Stop {
   ],
 )
 class TripStop {
-  TripStop(this.id, {required this.tripId, required this.stopId});
+  TripStop(this.id, {required this.tripId, required this.stopId, required this.position});
 
   @PrimaryKey(autoGenerate: true)
   final int? id;
@@ -62,4 +62,6 @@ class TripStop {
 
   @ColumnInfo(name: 'stop_id')
   final int stopId;
+
+  int position;
 }
