@@ -67,6 +67,10 @@ class TripStopProvider extends ChangeNotifier {
     return _stopDao.getStopByLatLng(lat, lng);
   }
 
+  Future<Stop?> getStopByName(String n) async {
+    return _stopDao.getStopByName(n);
+  }
+
   Future<void> insertStop(Stop stop) async {
     _stopDao.insertStop(stop);
     notifyListeners();

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'model.dart';
+import 'database/model.dart';
 
 class TodoItem extends StatelessWidget {
   TodoItem({
@@ -33,6 +33,7 @@ class TodoItem extends StatelessWidget {
       }),
       leading: CircleAvatar(child: Text(todo.name[0])),
       title: Text(todo.name, style: _getTextStyle(todo.checked)),
+      subtitle: Text("Date: ${todo.dueDate}"),
     );
   }
 }

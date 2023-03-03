@@ -15,11 +15,12 @@ class TodoModel extends ChangeNotifier {
     _todos = await _dao.getTodos();
   }
 
-  void addTodoItem(String name) {
+  void addTodoItem(String name, String due) {
     final todo = Todo(
       id: null,
       name: name,
       checked: false,
+      dueDate: due
     );
     _dao.insertTodo(todo).then((value) {
       _todos.insert(0, todo);
@@ -41,5 +42,13 @@ class TodoModel extends ChangeNotifier {
       _todos.remove(todo);
       notifyListeners();
     });
+  }
+
+  List<Todo> filterTodos(String query) {
+    return todos.where((todo) {
+      final nameLower = todo.name.toLowerCase();
+      final queryLower = query.toLowerCase();
+      return nameLower.contains(queryLower) || todo.dueDate == queryLower;
+    }).toList();
   }
 }

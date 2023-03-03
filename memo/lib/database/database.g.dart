@@ -85,7 +85,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Todo` (`id` INTEGER, `name` TEXT NOT NULL, `checked` INTEGER NOT NULL, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `Todo` (`id` INTEGER, `name` TEXT NOT NULL, `checked` INTEGER NOT NULL, `dueDate` TEXT NOT NULL, PRIMARY KEY (`id`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -110,7 +110,8 @@ class _$TodoDao extends TodoDao {
             (Todo item) => <String, Object?>{
                   'id': item.id,
                   'name': item.name,
-                  'checked': item.checked ? 1 : 0
+                  'checked': item.checked ? 1 : 0,
+                  'dueDate': item.dueDate
                 }),
         _todoUpdateAdapter = UpdateAdapter(
             database,
@@ -119,7 +120,8 @@ class _$TodoDao extends TodoDao {
             (Todo item) => <String, Object?>{
                   'id': item.id,
                   'name': item.name,
-                  'checked': item.checked ? 1 : 0
+                  'checked': item.checked ? 1 : 0,
+                  'dueDate': item.dueDate
                 }),
         _todoDeletionAdapter = DeletionAdapter(
             database,
@@ -128,7 +130,8 @@ class _$TodoDao extends TodoDao {
             (Todo item) => <String, Object?>{
                   'id': item.id,
                   'name': item.name,
-                  'checked': item.checked ? 1 : 0
+                  'checked': item.checked ? 1 : 0,
+                  'dueDate': item.dueDate
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -149,7 +152,8 @@ class _$TodoDao extends TodoDao {
         mapper: (Map<String, Object?> row) => Todo(
             id: row['id'] as int?,
             name: row['name'] as String,
-            checked: (row['checked'] as int) != 0));
+            checked: (row['checked'] as int) != 0,
+            dueDate: row['dueDate'] as String));
   }
 
   @override
@@ -158,7 +162,8 @@ class _$TodoDao extends TodoDao {
         mapper: (Map<String, Object?> row) => Todo(
             id: row['id'] as int?,
             name: row['name'] as String,
-            checked: (row['checked'] as int) != 0),
+            checked: (row['checked'] as int) != 0,
+            dueDate: row['dueDate'] as String),
         arguments: [id]);
   }
 

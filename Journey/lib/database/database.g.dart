@@ -301,6 +301,17 @@ class _$StopDao extends StopDao {
   }
 
   @override
+  Future<Stop?> getStopByName(String n) async {
+    return _queryAdapter.query('SELECT * FROM Stop WHERE name = ?1',
+        mapper: (Map<String, Object?> row) => Stop(row['id'] as int?,
+            latitude: row['latitude'] as double,
+            longitude: row['longitude'] as double,
+            name: row['name'] as String,
+            info: row['info'] as String?),
+        arguments: [n]);
+  }
+
+  @override
   Future<int?> deleteStopById(int id) async {
     return _queryAdapter.query('DELETE FROM stop WHERE id = ?1',
         mapper: (Map<String, Object?> row) => row.values.first as int,

@@ -38,8 +38,11 @@ abstract class StopDao {
       'SELECT * FROM Stop INNER JOIN TripStop ON Stop.id = TripStop.stop_id WHERE TripStop.trip_id = :tripId')
   Future<List<Stop>> getStopsByTripId(int tripId);
 
-@Query('SELECT * FROM Stop WHERE latitude = :lat AND longitude = :lng')
-Future<Stop?> getStopByLatLng(double lat, double lng);
+  @Query('SELECT * FROM Stop WHERE latitude = :lat AND longitude = :lng')
+  Future<Stop?> getStopByLatLng(double lat, double lng);
+
+  @Query('SELECT * FROM Stop WHERE name = :n')
+  Future<Stop?> getStopByName(String n);
 
   @Insert(onConflict: OnConflictStrategy.replace)
   Future<void> insertStop(Stop stop);

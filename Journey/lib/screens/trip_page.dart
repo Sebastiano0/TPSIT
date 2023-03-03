@@ -2,7 +2,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:place_picker/place_picker.dart';
 
-import '../trip_stop_provider.dart';
+import '../database/trip_stop_provider.dart';
 import '../database/model.dart';
 
 class TripPage extends StatefulWidget {
@@ -35,7 +35,6 @@ class _TripPageState extends State<TripPage> {
   void initState() {
     super.initState();
     if (widget.trip != null) {
-      // Popola i campi con i dati del viaggio passato come parametro
       _tripNameEntered = true;
       _tripNameController.text = widget.trip!.name;
       tripStopProvider.getStopsByTripId(widget.trip!.id!).then((stops) {
@@ -55,7 +54,7 @@ class _TripPageState extends State<TripPage> {
           IconButton(
             icon: const Icon(Icons.save),
             onPressed:
-                _stopsId.isNotEmpty && _tripNameEntered ? _saveTrip : null,
+                _stopsId.length > 1 && _tripNameEntered ? _saveTrip : null,
           ),
         ],
       ),
@@ -195,7 +194,7 @@ class _TripPageState extends State<TripPage> {
   }
 
   void _saveTrip() async {
-    if (_tripNameController.text.isNotEmpty && _stopsId.isNotEmpty) {
+    if (_tripNameController.text.isNotEmpty && _stopsId.length > 1) {
       var currentTrip = widget.trip;
       if (currentTrip == null) {
         final trip = Trip(
@@ -252,22 +251,6 @@ class _TripPageState extends State<TripPage> {
         }
       }
       Navigator.pop(context);
-    } else {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Missing information'),
-          content: const Text('Please fill all the fields'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('OK'),
-            )
-          ],
-        ),
-      );
     }
   }
 
@@ -276,8 +259,7 @@ class _TripPageState extends State<TripPage> {
         builder: (context) =>
             PlacePicker("AIzaSyBxI-We0hHKqKhaV1JZZxYrC6gOX8_qJjA")));
 
-    var existingStop = await tripStopProvider.getStopByLatLng(
-        result.latLng!.latitude, result.latLng!.longitude);
+    var existingStop = await tripStopProvider.getStopByName(result.name!);
 
     if (existingStop == null) {
       var newStop = Stop(

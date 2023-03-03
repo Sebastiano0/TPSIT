@@ -1,7 +1,7 @@
 import 'package:provider/provider.dart';
 
 import '../logic/icon_weather.dart';
-import '../trip_stop_provider.dart';
+import '../database/trip_stop_provider.dart';
 import 'maps.dart';
 import 'package:flutter/material.dart';
 import '../database/dao.dart';
@@ -92,9 +92,9 @@ class _HomePageState extends State<HomePage> {
 
                             String? iconUrl = snapshot.data!
                                 .substring(0, snapshot.data!.indexOf(":"));
-                            double temp = 280.15 -
-                                double.parse(snapshot.data!.substring(
-                                    snapshot.data!.indexOf(":") + 1));
+                            double temp = double.parse(snapshot.data!.substring(
+                                    snapshot.data!.indexOf(":") + 1)) -
+                                273.15;
 
                             return Padding(
                               padding: const EdgeInsets.only(right: 8),
@@ -105,10 +105,8 @@ class _HomePageState extends State<HomePage> {
                                           "http://openweathermap.org/img/wn/$iconUrl@2x.png",
                                           height: 24)
                                       : Container(),
-                                  const SizedBox(width: 8),
-                                  Text(
-                                    '${temp.toStringAsFixed(1)}°C',
-                                  ),
+                                  Text('${temp.toStringAsFixed(1)}°C',
+                                      overflow: TextOverflow.ellipsis),
                                 ],
                               ),
                             );
@@ -117,7 +115,11 @@ class _HomePageState extends State<HomePage> {
                           }
                         },
                       ),
-                      Text("- ${stops[index].name}"),
+                      Expanded(
+                        child: Text(
+                          "- ${stops[index].name}",
+                        ),
+                      ),
                     ],
                   );
                 },
@@ -145,7 +147,21 @@ class _HomePageState extends State<HomePage> {
           itemBuilder: (context, index) {
             return Card(
               child: ListTile(
-                title: Text(_trips[index].name),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(_trips[index].name),
+                    Text(
+                      _trips[index]
+                          .lastUpdate!
+                          .substring(0, _trips[index].lastUpdate!.indexOf(" ")),
+                      style: const TextStyle(
+                        color: Colors.grey,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ],
+                ),
                 onTap: () => _handleTripView(_trips[index]),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,

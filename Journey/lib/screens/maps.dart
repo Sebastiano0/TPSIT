@@ -1,10 +1,9 @@
 import 'package:provider/provider.dart';
-
-import '../trip_stop_provider.dart';
-import 'trip_page.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import '../database/trip_stop_provider.dart';
+import 'package:flutter/material.dart';
 import '../database/model.dart';
 
 class PickerDemo extends StatefulWidget {
@@ -26,6 +25,18 @@ class PickerDemoState extends State<PickerDemo> {
   Map<PolylineId, Polyline> polylines = {};
   List<LatLng> polylineCoordinates = [];
   late TripStopProvider tripStopProvider;
+  final List<String> transportModes = [
+    TravelMode.driving.toString(),
+    TravelMode.walking.toString(),
+    TravelMode.transit.toString(),
+  ];
+
+  final List<Icon> transportIcons = [
+    const Icon(Icons.directions_car),
+    const Icon(Icons.directions_walk),
+    const Icon(Icons.directions_bus),
+  ];
+  TravelMode selectedTransportMode = TravelMode.driving;
 
   @override
   void initState() {
@@ -61,6 +72,20 @@ class PickerDemoState extends State<PickerDemo> {
         stops.map((stop) => LatLng(stop.latitude, stop.longitude)).toList();
   }
 
+  Future<void> _onTransportModeChanged(Icon? mode) async {
+    if (mode != null) {
+      final int index = transportIcons.indexOf(mode);
+      print(index);
+      print(transportModes[index]);
+      String transport = transportModes[index];
+      setState(() {
+        selectedTransportMode = TravelMode.values
+            .firstWhere((element) => element.toString() == transport);
+        _loadPoints();
+      });
+    }
+  }
+
   getDirections(startLocation, endLocation, polylineIdVal) async {
     List<LatLng> polylineCoordinates = [];
 
@@ -73,7 +98,7 @@ class PickerDemoState extends State<PickerDemo> {
       googleAPiKey,
       PointLatLng(startLocation.latitude, startLocation.longitude),
       PointLatLng(endLocation.latitude, endLocation.longitude),
-      travelMode: TravelMode.driving,
+      travelMode: selectedTransportMode,
     );
 
     if (result.points.isNotEmpty) {
@@ -109,21 +134,24 @@ class PickerDemoState extends State<PickerDemo> {
 
   @override
   Widget build(BuildContext context) {
-    tripStopProvider = Provider.of<TripStopProvider>(context, listen: false);
-    // _loadPoints();
+    // tripStopProvider precedente
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.trip.name),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => TripPage(trip: widget.trip)),
-              );
-            },
+          DropdownButton<Icon>(
+            value: transportIcons[
+                transportModes.indexOf(selectedTransportMode.toString())],
+            onChanged: _onTransportModeChanged,
+            dropdownColor: Colors.red,
+            items: transportIcons
+                .map(
+                  (mode) => DropdownMenuItem(
+                    value: mode,
+                    child: mode,
+                  ),
+                )
+                .toList(),
           ),
         ],
       ),
@@ -139,8 +167,7 @@ class PickerDemoState extends State<PickerDemo> {
               markers: markers,
               mapType: MapType.hybrid,
               onMapCreated: _onMapCreated,
-              // polylines: polylines.toSet(),
-              polylines: Set<Polyline>.of(polylines.values), //polylines
+              polylines: Set<Polyline>.of(polylines.values),
             );
           } else {
             return const Center(child: CircularProgressIndicator());
