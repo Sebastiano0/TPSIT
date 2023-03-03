@@ -218,7 +218,7 @@ iconUrl != null ? Image.network("http://openweathermap.org/img/wn/$iconUrl@2x.pn
 
 ```
 
-## Schermate
+## Schermate principali
 ![home](https://i.ibb.co/jMw6HdC/imageedit-4-4513365385.jpg)       ![show trip](https://i.ibb.co/0rvzsLC/imageedit-6-2818824815.jpg)
 ## Riferimenti
 
