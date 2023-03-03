@@ -6,15 +6,15 @@ Il **provider** consente di gestire le modifiche allo stato dell'applicazione in
 
 
 ## Dettagli implementativi
-La classe principale dell'applicazione è `MyApp`, che utilizza `ChangeNotifierProvider` per fornire un'istanza di `TodoProvider` a tutti i widget figli. Il widget `MyHomePage` rappresenta la pagina principale dell'applicazione e utilizza il provider per accedere all'elenco di to-do. Quando viene effettuata una modifica allo stato, come l'aggiunta di un nuovo elemento, il provider invia una notifica a tutti i widget che dipendono da esso, in modo che possano essere aggiornati in tempo reale.
+La classe principale dell'applicazione è `MyApp`, che utilizza `ChangeNotifierProvider` per fornire un'istanza di `TodoModel` a tutti i widget figli. Il widget `MyHomePage` rappresenta la pagina principale dell'applicazione e utilizza il provider per accedere all'elenco di to-do. Quando viene effettuata una modifica allo stato, come l'aggiunta di un nuovo elemento, il provider invia una notifica a tutti i widget che dipendono da esso, in modo che possano essere aggiornati in tempo reale.
 
 La classe `TodoProvider` estende `ChangeNotifier` e contiene la logica per gestire l'elenco di to-do. Troviamo i metodi per aggiungere, modificare e eliminare gli elementi dall'elenco, e notifica i widget interessati quando lo stato cambia.
 
 ## Codice significativo
 
-Come detto in precedenza il codice significativo si può trovare nella classe `TodoProvider`, dove grazie andiamo ad agire sulla logica (mostrato metodo per aggiungere) e andiamo a notificare tutti i widget in ascolto del cambiamento
+Come detto in precedenza il codice significativo si può trovare nella classe `TodoModel`, dove grazie andiamo ad agire sulla logica (mostrato metodo per aggiungere) e andiamo a notificare tutti i widget in ascolto del cambiamento
 ```dart
-class TodoProvider extends ChangeNotifier {
+class TodoModel extends ChangeNotifier {
   List<Todo> _todos = [];
 
   List<Todo> get todos => _todos;
