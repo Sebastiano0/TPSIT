@@ -81,15 +81,6 @@ class NotificationHelper {
       matchDateTimeComponents: DateTimeComponents.time,
       payload: 'It could be anything you pass',
     );
-
-    // Invia la notifica immediatamente per testare
-    // await flutterLocalNotificationsPlugin.show(
-    //   id,
-    //   title,
-    //   body,
-    //   platformChannelSpecifics,
-    //   payload: 'It could be anything you pass',
-    // );
   }
 
   Future<void> showPendingNotifications() async {

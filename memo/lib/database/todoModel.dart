@@ -16,12 +16,7 @@ class TodoModel extends ChangeNotifier {
   }
 
   void addTodoItem(String name, String due) {
-    final todo = Todo(
-      id: null,
-      name: name,
-      checked: false,
-      dueDate: due
-    );
+    final todo = Todo(id: null, name: name, checked: false, dueDate: due);
     _dao.insertTodo(todo).then((value) {
       _todos.insert(0, todo);
       notifyListeners();
@@ -29,6 +24,7 @@ class TodoModel extends ChangeNotifier {
   }
 
   void updateTodoItem(Todo todo) {
+    todo.checked = !todo.checked;
     _dao.updateTodo(todo).then((value) {
       final existingTodoIndex =
           _todos.indexWhere((element) => element.id == todo.id);
@@ -42,13 +38,5 @@ class TodoModel extends ChangeNotifier {
       _todos.remove(todo);
       notifyListeners();
     });
-  }
-
-  List<Todo> filterTodos(String query) {
-    return todos.where((todo) {
-      final nameLower = todo.name.toLowerCase();
-      final queryLower = query.toLowerCase();
-      return nameLower.contains(queryLower) || todo.dueDate == queryLower;
-    }).toList();
   }
 }

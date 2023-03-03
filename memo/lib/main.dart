@@ -5,9 +5,8 @@ import 'package:provider/provider.dart';
 import 'database/todoModel.dart';
 import 'database/dao.dart';
 import 'database/database.dart';
-import 'noti.dart';
-import 'widgets.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'widget/noti.dart';
+import 'widget/widgets.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -55,6 +54,7 @@ class MyHomePage extends StatelessWidget {
   TimeOfDay? selectedTime;
   NotificationHelper noti = NotificationHelper();
   final String title;
+  bool _sortAscending = true;
 
   @override
   Widget build(BuildContext context) {
@@ -195,6 +195,4 @@ class MyHomePage extends StatelessWidget {
       _dateController.text += time;
     }
   }
-
-  Future<void> sendNotification(Widget widget) async {}
 }
