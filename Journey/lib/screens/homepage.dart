@@ -6,7 +6,6 @@ import 'maps.dart';
 import 'package:flutter/material.dart';
 import '../database/dao.dart';
 import '../database/model.dart';
-import '../database/widgets.dart';
 import 'trip_page.dart';
 
 class HomePage extends StatefulWidget {
