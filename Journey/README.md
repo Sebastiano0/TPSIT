@@ -219,9 +219,8 @@ iconUrl != null ? Image.network("http://openweathermap.org/img/wn/$iconUrl@2x.pn
 ```
 
 ## Schermate
-![home](https://i.ibb.co/0qh6zHQ/4.jpg)| ![va](https://i.ibb.co/6PFyGqs/3.jpg)
+![home](https://i.ibb.co/0qh6zHQ/4.jpg)| ![show trip](https://i.ibb.co/6PFyGqs/3.jpg)
 
-![Login](https://i.ibb.co/0qh6zHQ/4.jpg)![Chat](https://i.ibb.co/6PFyGqs/3.jpg)
 
 ## Riferimenti
 
