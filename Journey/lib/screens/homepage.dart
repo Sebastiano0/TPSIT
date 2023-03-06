@@ -94,7 +94,6 @@ class _HomePageState extends State<HomePage> {
                             double temp = double.parse(snapshot.data!.substring(
                                     snapshot.data!.indexOf(":") + 1)) -
                                 273.15;
-
                             return Padding(
                               padding: const EdgeInsets.only(right: 8),
                               child: Row(
